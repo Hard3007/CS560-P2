@@ -10,7 +10,7 @@ export default [
     rules: { 'no-unused-vars': ['error', { argsIgnorePattern: '^_' }] },
   },
   {
-    files: ['server/**/*.js', 'scripts/**/*.js', '*.config.js'],
+    files: ['server/**/*.js', '*.config.js'],
     languageOptions: { globals: globals.node },
   },
   {

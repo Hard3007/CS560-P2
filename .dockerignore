@@ -6,3 +6,4 @@ tmp
 coverage
 *.log
 data/raw
+data/prepared

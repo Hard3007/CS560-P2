@@ -2,6 +2,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { config } from './config.js';
 import { checkDatabase } from './db/connection.js';
+import { recallsRouter } from './routes/recalls.js';
 
 export function createApp() {
   const app = express();
@@ -19,6 +20,8 @@ export function createApp() {
       res.status(503).json({ status: 'unavailable', database: 'unavailable' });
     }
   });
+
+  app.use('/api/recalls', recallsRouter);
 
   app.use(
     express.static(fileURLToPath(new URL('../public/', import.meta.url))),

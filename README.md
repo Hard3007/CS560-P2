@@ -1,44 +1,59 @@
 # RecallGuard
 
-Track Products and Check Safety Recalls.
+Track products you own and check for safety recalls.
 
 **Authors:** Sheng Qin and Tian Yuan  
 **Course:** [CS5610 Web Development, Fall 2026](https://johnguerra.co/classes/webDevelopment_online_fall_2026/)  
 **Repository:** [infiniwire/CS560-P2](https://github.com/infiniwire/CS560-P2)
 
-**Live application:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
+**Website:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
 
-## Current state
+## About
 
-A minimal starting point with a RecallGuard logo above the My Products, Recall Explorer, and My Watchlist links. There is no body content or frontend JavaScript. Express serves the pages and a server-only MongoDB module supports production connection checks. Product CRUD, recall matching, watchlist features, and data import are not implemented.
+RecallGuard brings together recall records from the U.S. Consumer Product Safety Commission (CPSC) and Health Canada. Users will be able to keep a list of their products, look for possible recalls, and save notices to a watchlist.
 
-No government records have been imported. The server does not create, modify, or delete database records.
+The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. The page currently has the RecallGuard logo and links to My Products, Recall Explorer, and My Watchlist. The product and watchlist features are still under development.
 
-## Local preview
+The initial data import contains 15,262 notices: 10,047 from CPSC and 5,215 from Health Canada. They are stored in `recallguard.recalls` using the same 22-field structure. See [recall data](data/README.md) for the fields and source details.
+
+## Run locally
 
 Requires Node.js 22.13 or newer and npm.
 
 ```sh
 npm ci
+```
+
+Copy `.env.example` to `.env`. Set `MONGODB_PUBLIC_URI` to the `MONGO_PUBLIC_URL` from the Railway MongoDB service, then start the server:
+
+```sh
 npm run dev
 ```
 
-Open <http://localhost:4173>. `npm start` runs without file watching. Copy `.env.example` to `.env` and set `MONGODB_PUBLIC_URI` to the resolved `MONGO_PUBLIC_URL` from the Railway MongoDB service. Local development automatically loads `.env` and prefers this public connection; it can fall back to `MONGODB_URI`. If both are blank, local preview runs without MongoDB. Port 4173 is used because port 3000 is reserved on the development machine.
+Open <http://localhost:4173>. Use `npm start` to run without file watching.
 
-Railway deployments (identified by `RAILWAY_ENVIRONMENT_ID`) and any process with `NODE_ENV=production` use only `MONGODB_URI`, regardless of `MONGODB_PUBLIC_URI`. Keep the public URL in the ignored local `.env`, never in source files. Both local and production connections use the `recallguard` database. Opening <http://localhost:4173/health> verifies the actual database ping; a successful connection returns `database: "connected"`.
+Local development loads `.env` and uses `MONGODB_PUBLIC_URI`, falling back to `MONGODB_URI`. Without either setting, the page can run without a database connection. The local connection points to the same Railway database used in production.
+
+To check formatting and lint rules:
 
 ```sh
 npm run check
 npm run format
 ```
 
-## Railway deployment
+## Recall API
 
-The Dockerfile installs production dependencies and starts Express on `0.0.0.0` using Railway's `PORT`. The `production` environment must set `MONGODB_URI` to a reference to its MongoDB service's private connection URL, and `MONGODB_DB` to `recallguard`. Keep connection credentials in Railway variables, never in frontend code or Git.
+`GET /api/recalls` reads the imported records from MongoDB. It returns `items`, `total`, `page`, `limit`, and `totalPages`, sorted by the source update date, newest first.
 
-The RecallGuard Railway project contains the `CS560-P2` application and a MongoDB service with persistent storage in `production`. The application automatically deploys from GitHub `main`. The service uses the detected Dockerfile, public target port 8080, and `/health` as its deployment health check. These service settings are configured in Railway.
+The default page size is 20; the maximum is 100. For example, open <http://localhost:4173/api/recalls?page=1&limit=20> to read the first page. Invalid pagination returns HTTP 400, and a database error returns HTTP 503.
 
-Runtime variables:
+Frontend modules can import `fetchRecalls` from `/js/api.js` and call `fetchRecalls({ page: 1, limit: 20 })` to load a page of records.
+
+## Deployment
+
+Railway deploys the `main` branch using the Dockerfile. The server listens on Railway's `PORT`, and `/health` is the deployment health check.
+
+The production environment uses these variables:
 
 ```text
 NODE_ENV=production
@@ -46,16 +61,16 @@ MONGODB_URI=${{MongoDB.MONGO_URL}}
 MONGODB_DB=recallguard
 ```
 
-The URI above is a Railway reference expression, not a credential. MongoDB is reached over Railway private networking.
+Production uses `MONGODB_URI` over Railway's private network and requires a working database connection at startup. `/health` and `/api/health` check the connection and return HTTP 503 if it fails.
 
-Production startup requires a successful MongoDB connection and ping. `/health` and `/api/health` repeat a bounded database ping and return HTTP 503 if it fails. Local preview without a URI returns `database: "not_configured"`; it does not claim database connectivity. Health responses include the Railway Git revision when available.
+Keep database credentials in `.env` locally and Railway variables in production. `.env` is excluded from Git.
 
-## Future feature ownership
+## Team responsibilities
 
-- Sheng Qin: My Products, product CRUD, search/filtering, and recall matching.
-- Tian Yuan: Recall Explorer and My Watchlist, recall search, saved recalls, notes, and status CRUD.
-- Shared: government recall reference data, MongoDB connection, and base styles.
+- Sheng Qin: My Products, product CRUD, search and filtering, and recall matching.
+- Tian Yuan: Recall Explorer and My Watchlist, recall search, saved recalls, notes, and status updates.
+- Shared: recall data, database connection, and page styles.
 
 ## License
 
-[MIT](LICENSE), excluding third-party font assets.
+[MIT](LICENSE). The third-party font has a separate license.

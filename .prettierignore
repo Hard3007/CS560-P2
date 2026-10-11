@@ -3,3 +3,4 @@ package-lock.json
 coverage/
 tmp/
 data/raw/
+data/prepared/
