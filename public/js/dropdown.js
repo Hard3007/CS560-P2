@@ -134,11 +134,18 @@ export class Dropdown {
   position() {
     const rect = this.root.getBoundingClientRect();
     const viewport = window.visualViewport;
-    const bottom = viewport
+    let bottom = viewport
       ? viewport.height + viewport.offsetTop
       : window.innerHeight;
+    let top = viewport?.offsetTop || 0;
+    const dialog = this.root.closest('dialog');
+    if (dialog) {
+      const bounds = dialog.getBoundingClientRect();
+      top = Math.max(top, bounds.top + 12);
+      bottom = Math.min(bottom, bounds.bottom - 12);
+    }
     const below = bottom - rect.bottom;
-    const above = rect.top - (viewport?.offsetTop || 0);
+    const above = rect.top - top;
     const upward = below < 180 && above > below;
     this.root.classList.toggle('dropdown-upward', upward);
     this.menu.style.maxHeight = `${Math.max(80, Math.min(280, (upward ? above : below) - 12))}px`;
