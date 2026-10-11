@@ -1,0 +1,114 @@
+.image-preview-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.image-viewer-open {
+  overflow: hidden;
+}
+.image-viewer {
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100svh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #15181b;
+  color: #fff;
+}
+.image-viewer[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+.image-viewer::backdrop {
+  background: #15181b;
+}
+.image-viewer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #ffffff26;
+}
+.image-viewer-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.image-viewer button {
+  min-width: 44px;
+  padding: 8px 12px;
+  border: 1px solid #ffffff50;
+  background: transparent;
+  color: #fff;
+}
+.image-viewer button:hover:not(:disabled) {
+  background: #ffffff18;
+}
+.image-viewer button:focus-visible {
+  outline-color: #fff;
+  outline-offset: 2px;
+}
+#image-zoom-level {
+  min-width: 48px;
+  text-align: center;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.image-viewer-stage {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+.image-viewer-stage[data-zoomed='true'] {
+  cursor: grab;
+}
+.image-viewer-stage[data-dragging='true'] {
+  cursor: grabbing;
+}
+.image-viewer-stage img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: none;
+  max-height: none;
+  transform-origin: center;
+  pointer-events: none;
+}
+#image-viewer-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  font-size: 14px;
+}
+.image-viewer-caption {
+  margin: 0;
+  padding: 12px 20px;
+  max-height: 20svh;
+  overflow-y: auto;
+  border-top: 1px solid #ffffff26;
+  font-size: 13px;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .image-viewer-toolbar {
+    padding-inline: 12px;
+    gap: 8px;
+  }
+  .image-viewer-controls {
+    gap: 4px;
+  }
+  .image-viewer button {
+    padding-inline: 8px;
+  }
+}

@@ -1,5 +1,6 @@
 import { fetchRecall } from './api.js';
 import { countries, formatDate, safeUrl } from './recall-utils.js';
+import { openImageViewer } from './image-viewer.js';
 
 const query = new URLSearchParams(location.search);
 const status = document.querySelector('#detail-status');
@@ -108,7 +109,16 @@ async function loadRecall() {
         document.querySelector('#image-section').hidden =
           !document.querySelector('#product-images').childElementCount;
       });
-      figure.append(image);
+      const preview = document.createElement('button');
+      preview.type = 'button';
+      preview.className = 'image-preview-button';
+      preview.setAttribute('aria-label', `Enlarge image: ${image.alt}`);
+      preview.setAttribute('aria-haspopup', 'dialog');
+      preview.addEventListener('click', () =>
+        openImageViewer(image, item.caption || ''),
+      );
+      preview.append(image);
+      figure.append(preview);
       if (item.caption) {
         const caption = document.createElement('figcaption');
         caption.textContent = item.caption;

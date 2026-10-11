@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/components/navigation.css" />
     <link rel="stylesheet" href="/css/recalls.css" />
+    <link rel="stylesheet" href="/css/components/image-viewer.css" />
     <script type="module" src="/js/recall-detail.js"></script>
   </head>
   <body>
@@ -68,6 +69,31 @@
       </article>
       <noscript><p>Enable JavaScript to read this recall.</p></noscript>
     </main>
+    <dialog
+      id="image-viewer"
+      class="image-viewer"
+      aria-labelledby="image-viewer-title"
+    >
+      <div class="image-viewer-toolbar">
+        <h2 id="image-viewer-title" class="sr-only">Product image preview</h2>
+        <div class="image-viewer-controls" aria-label="Image zoom controls">
+          <button id="image-zoom-out" type="button" aria-label="Zoom out">
+            −
+          </button>
+          <output id="image-zoom-level" aria-label="Zoom level">100%</output>
+          <button id="image-zoom-in" type="button" aria-label="Zoom in">
+            +
+          </button>
+          <button id="image-zoom-reset" type="button">Reset</button>
+        </div>
+        <button id="image-viewer-close" type="button" autofocus>Close ×</button>
+      </div>
+      <div id="image-viewer-stage" class="image-viewer-stage">
+        <img id="image-viewer-image" alt="" draggable="false" hidden />
+        <p id="image-viewer-status" role="status">Loading image…</p>
+      </div>
+      <p id="image-viewer-caption" class="image-viewer-caption" hidden></p>
+    </dialog>
     <footer class="site-footer">
       <p>
         Sheng, Tian · CS5610 Project 2 ·
