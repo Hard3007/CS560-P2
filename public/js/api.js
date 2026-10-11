@@ -33,3 +33,7 @@ export async function fetchRecalls({
 }
 
 export const fetchRecallFilters = () => fetchJson('/api/recalls/filters');
+export const fetchRecall = (source, id) =>
+  fetchJson(
+    `/api/recalls/${encodeURIComponent(source)}/${encodeURIComponent(id)}`,
+  );

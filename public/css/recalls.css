@@ -3,6 +3,13 @@
   margin: 48px auto 64px;
   padding: 0 30px;
 }
+.detail-heading h1 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 400;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
 button,
 input,
 select {
@@ -16,7 +23,8 @@ select {
 }
 button,
 input,
-select {
+select,
+.solid-button {
   min-height: 44px;
 }
 button {
@@ -225,7 +233,8 @@ button:disabled {
   z-index: 1;
 }
 .country-options img,
-.country-label img {
+.country-label img,
+.detail-source img {
   width: 22px;
   height: 15px;
   object-fit: cover;
@@ -257,13 +266,15 @@ button:disabled {
   min-width: 0;
   border-right: 0;
 }
-.search-control > button[type='submit'] {
+.search-control > button[type='submit'],
+.solid-button {
   border: 1px solid #1e2124;
   background: #1e2124;
   color: #fff;
   padding: 10px 20px;
 }
-.search-control > button[type='submit']:hover {
+.search-control > button[type='submit']:hover,
+.solid-button:hover {
   background: #3a4046;
 }
 .filter-bottom {
@@ -398,7 +409,7 @@ button:disabled {
   opacity: 0.55;
 }
 .recall-col {
-  width: 43%;
+  width: 40%;
 }
 .country-col {
   width: 13%;
@@ -411,6 +422,9 @@ button:disabled {
 }
 .date-col {
   width: 11%;
+}
+.arrow-col {
+  width: 3%;
 }
 .recall-table th {
   padding: 12px 14px;
@@ -440,6 +454,7 @@ button:disabled {
   padding-right: 8px;
 }
 .recall-table tbody tr {
+  cursor: pointer;
   transition: background 120ms;
 }
 .recall-table tbody tr:hover,
@@ -455,6 +470,10 @@ button:disabled {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.recall-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .recall-subtitle {
   display: -webkit-box;
@@ -484,6 +503,10 @@ button:disabled {
 .date-cell {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+}
+.arrow-cell {
+  text-align: right;
+  color: #697178;
 }
 .mobile-meta {
   display: none;
@@ -547,6 +570,118 @@ button:disabled {
 [hidden] {
   display: none !important;
 }
+.back-link {
+  display: inline-block;
+  margin-bottom: 30px;
+  color: #535c64;
+  font-size: 14px;
+  text-underline-offset: 4px;
+}
+.detail-page {
+  max-width: 1200px;
+}
+.detail-heading {
+  padding-bottom: 32px;
+  border-bottom: 1px solid #1e2124;
+}
+.detail-source {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: #596169;
+  margin: 0 0 18px;
+}
+.detail-heading h1 {
+  max-width: 1000px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.detail-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin: 22px 0;
+}
+.detail-dates p {
+  margin: 0;
+  font-size: 12px;
+  color: #697178;
+}
+.detail-dates span {
+  color: #1e2124;
+  margin-left: 6px;
+}
+.solid-button {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  text-decoration: none;
+}
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 64px;
+}
+.detail-section {
+  padding: 30px 0;
+  border-bottom: 1px solid #d9dcde;
+}
+.detail-section h2,
+.product-facts h2 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 16px;
+}
+.detail-section p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0 0 12px;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.detail-section p:last-child {
+  margin-bottom: 0;
+}
+.product-facts {
+  padding-top: 30px;
+}
+.product-facts dl {
+  margin: 0;
+  font-size: 14px;
+}
+.product-facts dt {
+  margin: 24px 0 7px;
+  color: #697178;
+  font-size: 12px;
+}
+.product-facts dd {
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.product-images {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.product-images figure {
+  margin: 0;
+}
+.product-images img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  border: 1px solid #e1e3e5;
+}
+.product-images figcaption {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #697178;
+}
 @media (max-width: 1050px) {
   .filter-top {
     gap: 20px;
@@ -561,7 +696,7 @@ button:disabled {
     font-size: 13px;
   }
   .recall-col {
-    width: 40%;
+    width: 37%;
   }
   .country-col {
     width: 12%;
@@ -581,6 +716,10 @@ button:disabled {
   }
   .country-label {
     gap: 5px;
+  }
+  .detail-layout {
+    gap: 32px;
+    grid-template-columns: minmax(0, 1fr) 260px;
   }
 }
 @media (max-width: 700px) {
@@ -665,8 +804,10 @@ button:disabled {
   }
   .category-col,
   .date-col,
+  .arrow-col,
   .category-cell,
-  .date-cell {
+  .date-cell,
+  .arrow-cell {
     display: none;
   }
   .recall-table td,
@@ -718,6 +859,30 @@ button:disabled {
     justify-content: space-between;
     width: 100%;
     gap: 12px;
+  }
+  .detail-heading h1 {
+    font-size: 27px;
+    letter-spacing: -0.7px;
+  }
+  .detail-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .product-facts {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #d9dcde;
+  }
+  .detail-dates {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .product-images {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .product-images img {
+    height: 160px;
   }
 }
 @media (max-width: 380px) {

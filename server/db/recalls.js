@@ -73,6 +73,12 @@ export async function readRecallFilters() {
   };
 }
 
+export async function readRecall(source, sourceId) {
+  return getDatabase()
+    .collection('recalls')
+    .findOne({ source, sourceId }, { maxTimeMS: 5000 });
+}
+
 export async function readRecalls({
   page,
   limit,

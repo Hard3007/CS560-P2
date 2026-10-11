@@ -16,3 +16,26 @@ export function formatDate(value) {
     timeZone: 'UTC',
   }).format(new Date(`${value}T00:00:00Z`));
 }
+
+export function safeUrl(value, official = false) {
+  try {
+    const url = new URL(value);
+    if (
+      !['http:', 'https:'].includes(url.protocol) ||
+      url.username ||
+      url.password
+    )
+      return null;
+    if (
+      official &&
+      (url.protocol !== 'https:' ||
+        !['www.cpsc.gov', 'cpsc.gov', 'recalls-rappels.canada.ca'].includes(
+          url.hostname,
+        ))
+    )
+      return null;
+    return url.href;
+  } catch {
+    return null;
+  }
+}

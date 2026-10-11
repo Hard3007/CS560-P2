@@ -116,9 +116,16 @@ function renderRow(recall) {
   const fragment = document
     .querySelector('#row-template')
     .content.cloneNode(true);
+  const row = fragment.querySelector('tr');
   const link = fragment.querySelector('.recall-link');
   const name =
     recall.products.map((product) => product.name).join(', ') || recall.title;
+  const query = new URLSearchParams({
+    source: recall.source,
+    id: recall.sourceId,
+    return: location.search,
+  });
+  link.href = `/recall.html?${query}`;
   link.textContent = name;
   fragment.querySelector('.recall-subtitle').textContent =
     name === recall.title ? '' : recall.title;
@@ -138,6 +145,17 @@ function renderRow(recall) {
   );
   fragment.querySelector('.mobile-meta').textContent =
     `Updated ${formatDate(recall.sourceUpdatedDate)}`;
+  row.addEventListener('click', (event) => {
+    if (
+      event.target.closest('a') ||
+      event.button !== 0 ||
+      window.getSelection()?.toString()
+    )
+      return;
+    if (event.metaKey || event.ctrlKey)
+      window.open(link.href, '_blank', 'noopener');
+    else location.href = link.href;
+  });
   return fragment;
 }
 

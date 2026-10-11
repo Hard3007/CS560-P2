@@ -12,7 +12,7 @@ Track products you own and check for safety recalls.
 
 RecallGuard brings together recall records from the U.S. Consumer Product Safety Commission (CPSC) and Health Canada. Users will be able to keep a list of their products, look for possible recalls, and save notices to a watchlist.
 
-The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. Recall Explorer lists the imported notices with country, keyword, category, and risk filters. The product and watchlist features are still under development.
+The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. Recall Explorer lists the imported notices with country, keyword, category, and risk filters. Each row opens the full recall details. The product and watchlist features are still under development.
 
 The initial data import contains 15,262 notices: 10,047 from CPSC and 5,215 from Health Canada. They are stored in `recallguard.recalls` using the same 22-field structure. See [recall data](data/README.md) for the fields and source details.
 
@@ -53,7 +53,7 @@ The list also accepts `country` (`US` or `CA`), `q` (keyword), `category`, `risk
 
 `updatedFrom` and `updatedTo` filter the source update date using `YYYY-MM-DD`. Both dates are included, and either end can be left blank. Category and the updated range are available under More filters in the Explorer.
 
-`GET /api/recalls/filters` returns the category and risk options.
+`GET /api/recalls/filters` returns the category and risk options. `GET /api/recalls/:source/:sourceId` returns a complete notice, or HTTP 404 if it does not exist. The Explorer table uses summary records; descriptions, instructions, contact information, and images appear on the detail page.
 
 ## Deployment
 

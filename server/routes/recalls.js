@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { readRecalls, readRecallFilters, riskOptions } from '../db/recalls.js';
+import {
+  readRecalls,
+  readRecall,
+  readRecallFilters,
+  riskOptions,
+} from '../db/recalls.js';
 
 export const recallsRouter = Router();
 
@@ -94,5 +99,22 @@ recallsRouter.get('/filters', async (_req, res) => {
     res
       .status(503)
       .json({ error: 'Recall filters are currently unavailable.' });
+  }
+});
+
+recallsRouter.get('/:source/:sourceId', async (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  const { source, sourceId } = req.params;
+  if (
+    !['cpsc', 'health-canada'].includes(source) ||
+    !/^[1-9]\d{0,19}$/.test(sourceId)
+  )
+    return res.status(400).json({ error: 'Invalid recall identifier.' });
+  try {
+    const recall = await readRecall(source, sourceId);
+    if (!recall) return res.status(404).json({ error: 'Recall not found.' });
+    res.json(recall);
+  } catch {
+    res.status(503).json({ error: 'Recall data is currently unavailable.' });
   }
 });

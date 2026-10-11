@@ -217,7 +217,7 @@
         <div class="table-container">
           <table class="recall-table">
             <caption class="sr-only">
-              Product recalls.
+              Product recalls. Follow a recall name to read the full notice.
             </caption>
             <colgroup>
               <col class="recall-col" />
@@ -225,6 +225,7 @@
               <col class="category-col" />
               <col class="risk-col" />
               <col class="date-col" />
+              <col class="arrow-col" />
             </colgroup>
             <thead>
               <tr>
@@ -236,6 +237,9 @@
                 <th scope="col" class="category-cell">Category</th>
                 <th scope="col">Risk</th>
                 <th scope="col" class="date-cell">Updated</th>
+                <th scope="col" class="arrow-cell">
+                  <span class="sr-only">Details</span>
+                </th>
               </tr>
             </thead>
             <tbody id="recall-rows"></tbody>
@@ -267,7 +271,7 @@
     <template id="row-template">
       <tr>
         <td class="recall-cell">
-          <span class="recall-link"></span><span class="recall-subtitle"></span
+          <a class="recall-link"></a><span class="recall-subtitle"></span
           ><span class="mobile-meta"></span>
         </td>
         <td class="country-cell">
@@ -276,6 +280,7 @@
         <td class="category-cell"></td>
         <td class="risk-cell"></td>
         <td class="date-cell"></td>
+        <td class="arrow-cell" aria-hidden="true">↗</td>
       </tr>
     </template>
   </body>
