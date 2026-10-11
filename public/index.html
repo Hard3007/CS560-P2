@@ -3,25 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>My Products | RecallGuard</title>
+    <meta
+      name="description"
+      content="Track the products you own and explore official safety recall notices from the United States and Canada."
+    />
+    <title>RecallGuard | Know your products</title>
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/components/navigation.css" />
+    <link rel="stylesheet" href="/css/home.css" />
     <script type="module" src="/js/user.js"></script>
   </head>
-  <body>
+  <body class="home-page">
     <header class="site-header">
       <a class="brand" href="/" aria-label="RecallGuard home">
         <img src="/assets/recallguard-mark.png" alt="" width="28" height="28" />
         <span>RecallGuard</span>
       </a>
-      <nav aria-label="Main navigation">
-        <ul class="tabs">
-          <li><a href="/" aria-current="page">My Products</a></li>
-          <li><a href="/recalls.html">Recall Explorer</a></li>
-          <li><a href="/watchlist.html">My Watchlist</a></li>
-        </ul>
-      </nav>
     </header>
+    <main class="home-content">
+      <section class="home-hero" aria-labelledby="home-title">
+        <h1 id="home-title">
+          <span>Know what</span><span>you bring home.</span>
+        </h1>
+        <div class="home-introduction">
+          <p>
+            One place to track recalls for your products, explore public recall
+            notices, and follow the recalls that matter to you.
+          </p>
+        </div>
+      </section>
+      <nav class="feature-tiles" aria-label="Explore RecallGuard">
+        <a
+          class="feature-tile"
+          href="/products.html"
+          aria-labelledby="products-tile-title"
+        >
+          <div class="tile-top">
+            <img
+              src="/assets/arrow-up-right.svg"
+              alt=""
+              width="28"
+              height="28"
+            />
+          </div>
+          <h2 id="products-tile-title">My Products</h2>
+          <p>Keep a list of what you own and look for possible recalls.</p>
+        </a>
+        <a
+          class="feature-tile"
+          href="/recalls.html"
+          aria-labelledby="explorer-tile-title"
+        >
+          <div class="tile-top">
+            <img
+              src="/assets/arrow-up-right.svg"
+              alt=""
+              width="28"
+              height="28"
+            />
+          </div>
+          <h2 id="explorer-tile-title">Recall Explorer</h2>
+          <p>Browse official notices from the United States and Canada.</p>
+        </a>
+        <a
+          class="feature-tile"
+          href="/watchlist.html"
+          aria-labelledby="watchlist-tile-title"
+        >
+          <div class="tile-top">
+            <img
+              src="/assets/arrow-up-right.svg"
+              alt=""
+              width="28"
+              height="28"
+            />
+          </div>
+          <h2 id="watchlist-tile-title">My Watchlist</h2>
+          <p>A place for the notices you want to follow up on.</p>
+        </a>
+      </nav>
+    </main>
     <footer class="site-footer">
       <p>
         Sheng, Tian · CS5610 Project 2 ·
