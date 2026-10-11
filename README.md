@@ -41,6 +41,16 @@ npm run check
 npm run format
 ```
 
+## Browser identity
+
+The app does not require a login. On the first visit, the browser generates a random UUID and saves it in `localStorage` as `recallguard.userId`. API requests made through the frontend API module include it in the `X-User-Id` header. The same browser keeps this ID across page navigation and reloads.
+
+Products and watchlist records will use this ID when those features are implemented. The current recall endpoints still return shared public data. This ID is not authentication. Clearing site data, using a different browser, or changing the site origin creates a separate identity; localhost and the deployed site do not share one. Product and watchlist content will be stored in MongoDB.
+
+Each page records a visit through `POST /api/user`. API requests carrying a valid `X-User-Id` update the user's `lastSeenAt` and renew the expiration of their products and watchlist for another 365 days. Health checks do not count as user activity.
+
+MongoDB TTL indexes on `users`, `products`, and `watchlist` remove records after `expiresAt`. Cleanup runs in MongoDB even when the web server is stopped, with a short background-processing delay. Returning after expiration also removes expired personal records before renewing the ID. Shared `recalls` never expire under this policy. Future product and watchlist writes must store `userId` and `expiresAt` from `req.user`; clients cannot set their own expiration date.
+
 ## Recall API
 
 `GET /api/recalls` reads the imported records from MongoDB. It returns `items`, `total`, `page`, `limit`, and `totalPages`, sorted by the source update date, newest first.

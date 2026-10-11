@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { config } from '../config.js';
+import { ensureUserIndexes } from './users.js';
 
 let client;
 let database;
@@ -22,6 +23,7 @@ export async function connectDatabase() {
     await client.connect();
     database = client.db(config.mongoDb);
     await database.command({ ping: 1 }, { timeoutMS: 5000 });
+    await ensureUserIndexes(database);
   } catch {
     await closeDatabase();
     // Driver errors may contain connection credentials; keep logs generic.

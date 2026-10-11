@@ -1,5 +1,10 @@
+import { getUserId } from './user.js';
+
 async function fetchJson(url, signal) {
-  const response = await fetch(url, { signal });
+  const response = await fetch(url, {
+    signal,
+    headers: { 'X-User-Id': getUserId() },
+  });
   const body = await response.json();
   if (!response.ok)
     throw new Error(body.error || 'Unable to load recall records.');

@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { config } from './config.js';
 import { checkDatabase } from './db/connection.js';
 import { recallsRouter } from './routes/recalls.js';
+import { trackUserActivity } from './middleware/user.js';
 
 export function createApp() {
   const app = express();
@@ -21,6 +22,13 @@ export function createApp() {
     }
   });
 
+  app.use('/api', trackUserActivity);
+  app.post('/api/user', (req, res) => {
+    if (!req.user) {
+      return res.status(400).json({ error: 'X-User-Id is required.' });
+    }
+    res.json(req.user);
+  });
   app.use('/api/recalls', recallsRouter);
 
   app.use(
