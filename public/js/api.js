@@ -6,10 +6,30 @@ async function fetchJson(url, signal) {
   return body;
 }
 
-export async function fetchRecalls({ page = 1, limit = 20, signal } = {}) {
+export async function fetchRecalls({
+  page = 1,
+  limit = 20,
+  country = '',
+  q = '',
+  category = '',
+  risk = '',
+  sort = 'latest',
+  updatedFrom = '',
+  updatedTo = '',
+  signal,
+} = {}) {
   const query = new URLSearchParams({
     page: String(page),
     limit: String(limit),
+    country,
+    q,
+    category,
+    risk,
+    sort,
+    updatedFrom,
+    updatedTo,
   });
   return fetchJson(`/api/recalls?${query}`, signal);
 }
+
+export const fetchRecallFilters = () => fetchJson('/api/recalls/filters');

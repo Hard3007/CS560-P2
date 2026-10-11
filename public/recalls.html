@@ -26,9 +26,193 @@
       </nav>
     </header>
     <main class="explorer page-content">
+      <form
+        id="filters"
+        class="filters"
+        role="search"
+        aria-label="Filter recall records"
+        novalidate
+      >
+        <div class="filter-top">
+          <fieldset class="country-filter">
+            <legend>Country</legend>
+            <div class="country-options">
+              <label
+                ><input type="radio" name="country" value="" checked /><span
+                  >All</span
+                ></label
+              >
+              <label
+                ><input type="radio" name="country" value="US" /><span
+                  ><img src="/assets/flag-us.svg" alt="" />United States</span
+                ></label
+              >
+              <label
+                ><input type="radio" name="country" value="CA" /><span
+                  ><img src="/assets/flag-ca.svg" alt="" />Canada</span
+                ></label
+              >
+            </div>
+          </fieldset>
+          <div class="search-field">
+            <label for="search">Search</label>
+            <div class="search-control">
+              <label id="risk-label" for="risk-trigger" class="sr-only"
+                >Risk</label
+              >
+              <div class="dropdown search-risk" data-dropdown="risk">
+                <select id="risk" name="risk" hidden>
+                  <option value="">All risks</option>
+                </select>
+                <button
+                  id="risk-trigger"
+                  type="button"
+                  class="dropdown-trigger"
+                  role="combobox"
+                  aria-labelledby="risk-label risk-value"
+                  aria-controls="risk-options"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                >
+                  <span id="risk-value">All risks</span>
+                </button>
+                <div
+                  id="risk-options"
+                  class="dropdown-menu"
+                  role="listbox"
+                  aria-labelledby="risk-label"
+                  hidden
+                ></div>
+              </div>
+              <input
+                id="search"
+                name="q"
+                type="search"
+                placeholder="Product, brand or keyword"
+                maxlength="120"
+                autocomplete="off"
+              />
+              <button type="submit">Search</button>
+            </div>
+          </div>
+        </div>
+        <div class="filter-actions">
+          <button
+            id="more-filters"
+            class="more-filters"
+            type="button"
+            aria-controls="advanced-filters"
+            aria-expanded="false"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="M3 6h18M3 12h18M3 18h18M8 3v6M16 9v6M10 15v6" />
+            </svg>
+            <span>More filters</span><span id="advanced-count" hidden></span>
+            <svg
+              class="filter-chevron"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="m4 6 4 4 4-4" />
+            </svg>
+          </button>
+          <button type="reset" class="text-button reset-button">
+            Clear filters
+          </button>
+        </div>
+        <div
+          id="advanced-filters"
+          class="filter-bottom advanced-filters"
+          hidden
+        >
+          <div class="filter-field category-field">
+            <label for="category">Category</label>
+            <div class="dropdown" data-dropdown="category">
+              <input
+                id="category"
+                name="category"
+                type="search"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="category-options"
+                aria-expanded="false"
+                placeholder="All categories"
+                maxlength="160"
+                autocomplete="off"
+              />
+              <button
+                type="button"
+                class="dropdown-toggle"
+                aria-label="Show categories"
+                tabindex="-1"
+              ></button>
+              <div
+                id="category-options"
+                class="dropdown-menu"
+                role="listbox"
+                aria-label="Categories"
+                hidden
+              ></div>
+            </div>
+          </div>
+          <fieldset class="updated-range">
+            <legend>Updated range</legend>
+            <div class="date-range-controls">
+              <label class="sr-only" for="updated-from">Updated from</label>
+              <input
+                type="date"
+                id="updated-from"
+                name="updatedFrom"
+                min="0001-01-01"
+                max="9999-12-31"
+                aria-label="Updated from"
+              />
+              <span class="date-separator" aria-hidden="true">to</span>
+              <label class="sr-only" for="updated-to">Updated to</label>
+              <input
+                type="date"
+                id="updated-to"
+                name="updatedTo"
+                min="0001-01-01"
+                max="9999-12-31"
+                aria-label="Updated to"
+              />
+            </div>
+          </fieldset>
+        </div>
+        <input id="sort" name="sort" type="hidden" value="latest" />
+      </form>
+
       <section id="results" aria-label="Recall results" aria-busy="true">
         <div class="results-heading">
           <p id="result-count" role="status">Loading recalls…</p>
+          <button
+            id="sort-toggle"
+            class="sort-toggle"
+            type="button"
+            data-order="latest"
+            aria-label="Newest updates first. Switch to oldest first."
+          >
+            <span id="sort-value">Newest</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path d="M6 4v16m-4-4 4 4 4-4M13 5h9M13 10h7M13 15h5M13 20h3" />
+            </svg>
+          </button>
         </div>
         <div class="table-container">
           <table class="recall-table">

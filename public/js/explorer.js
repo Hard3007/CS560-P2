@@ -1,5 +1,8 @@
-import { fetchRecalls } from './api.js';
+import { fetchRecalls, fetchRecallFilters } from './api.js';
 import { countries, formatDate } from './recall-utils.js';
+import { Dropdown } from './dropdown.js';
+
+const form = document.querySelector('#filters');
 const rows = document.querySelector('#recall-rows');
 const results = document.querySelector('#results');
 const count = document.querySelector('#result-count');
@@ -7,15 +10,101 @@ const previous = document.querySelector('#previous');
 const next = document.querySelector('#next');
 const message = document.querySelector('#list-message');
 const retry = document.querySelector('#retry');
+const sortToggle = document.querySelector('#sort-toggle');
 const tableContainer = document.querySelector('.table-container');
+const moreFilters = document.querySelector('#more-filters');
+const advancedFilters = document.querySelector('#advanced-filters');
 let page = 1;
 let controller;
-function restorePage() {
-  page = Math.max(
-    1,
-    Number(new URLSearchParams(location.search).get('page')) || 1,
+let timer;
+let pendingRisk = '';
+const dropdowns = [...document.querySelectorAll('[data-dropdown]')].map(
+  (root) => new Dropdown(root),
+);
+const categoryDropdown = dropdowns.find(
+  (dropdown) => dropdown.field.name === 'category',
+);
+
+function syncSort() {
+  const oldest = form.elements.sort.value === 'oldest';
+  sortToggle.dataset.order = oldest ? 'oldest' : 'latest';
+  document.querySelector('#sort-value').textContent = oldest
+    ? 'Oldest'
+    : 'Newest';
+  const description = oldest
+    ? 'Oldest updates first. Switch to newest first.'
+    : 'Newest updates first. Switch to oldest first.';
+  sortToggle.setAttribute('aria-label', description);
+  sortToggle.title = description;
+}
+
+function setAdvancedOpen(open) {
+  advancedFilters.hidden = !open;
+  moreFilters.setAttribute('aria-expanded', String(open));
+  if (!open) categoryDropdown.close();
+}
+
+function syncAdvancedFilters() {
+  const { category, updatedFrom, updatedTo } = form.elements;
+  updatedFrom.max = updatedTo.value || '9999-12-31';
+  updatedTo.min = updatedFrom.value || '0001-01-01';
+  const active =
+    Number(Boolean(category.value.trim())) +
+    Number(Boolean(updatedFrom.value || updatedTo.value));
+  const indicator = document.querySelector('#advanced-count');
+  indicator.textContent = active ? `(${active})` : '';
+  indicator.hidden = !active;
+}
+
+function restoreFilters() {
+  const query = new URLSearchParams(location.search);
+  page = Math.max(1, Number(query.get('page')) || 1);
+  const country = query.get('country') || '';
+  for (const input of form.elements.country)
+    input.checked = input.value === (countries[country] ? country : '');
+  for (const name of ['q', 'category', 'updatedFrom', 'updatedTo'])
+    form.elements[name].value = query.get(name) || '';
+  form.elements.sort.value =
+    query.get('sort') === 'oldest' ? 'oldest' : 'latest';
+  syncSort();
+  pendingRisk = query.get('risk') || '';
+  form.elements.risk.value = [...form.elements.risk.options].some(
+    (option) => option.value === pendingRisk,
+  )
+    ? pendingRisk
+    : '';
+  dropdowns.forEach((dropdown) => dropdown.sync());
+  syncAdvancedFilters();
+}
+
+function filters() {
+  const values = Object.fromEntries(new FormData(form));
+  values.risk = form.elements.risk.value || pendingRisk;
+  return {
+    ...values,
+    q: values.q.trim(),
+    category: values.category.trim(),
+    page,
+  };
+}
+
+function updateUrl(values) {
+  const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(values)) {
+    if (
+      value &&
+      !(key === 'page' && value === 1) &&
+      !(key === 'sort' && value === 'latest')
+    )
+      query.set(key, value);
+  }
+  history.replaceState(
+    null,
+    '',
+    `${location.pathname}${query.size ? `?${query}` : ''}`,
   );
 }
+
 function showMessage(title, description, canRetry = false) {
   message.hidden = false;
   document.querySelector('#message-title').textContent = title;
@@ -53,15 +142,18 @@ function renderRow(recall) {
 }
 
 async function loadRecalls() {
+  clearTimeout(timer);
+  syncAdvancedFilters();
+  if (!form.checkValidity()) {
+    setAdvancedOpen(true);
+    form.reportValidity();
+    return;
+  }
   controller?.abort();
   controller = new AbortController();
   const { signal } = controller;
-  const values = { page };
-  history.replaceState(
-    null,
-    '',
-    `${location.pathname}${page > 1 ? `?page=${page}` : ''}`,
-  );
+  const values = filters();
+  updateUrl(values);
   results.setAttribute('aria-busy', 'true');
   tableContainer.inert = true;
   count.textContent = 'Loading recalls…';
@@ -77,8 +169,8 @@ async function loadRecalls() {
       showMessage(
         data.total ? 'No recalls on this page' : 'No recalls found',
         data.total
-          ? 'Choose Previous to return to the results.'
-          : 'No records are available.',
+          ? 'Choose Previous or clear the filters to return to the results.'
+          : 'Try a different keyword or clear a filter.',
       );
     }
     const start = data.items.length ? (page - 1) * data.limit + 1 : 0;
@@ -105,6 +197,48 @@ async function loadRecalls() {
   }
 }
 
+function applyFilters() {
+  page = 1;
+  loadRecalls();
+}
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  applyFilters();
+});
+form.addEventListener('input', (event) => {
+  if (!['q', 'category'].includes(event.target.name)) return;
+  clearTimeout(timer);
+  timer = setTimeout(applyFilters, 350);
+});
+form.addEventListener('change', (event) => {
+  if (
+    !['country', 'category', 'risk', 'updatedFrom', 'updatedTo'].includes(
+      event.target.name,
+    )
+  )
+    return;
+  if (event.target.name === 'risk') pendingRisk = event.target.value;
+  applyFilters();
+});
+form.addEventListener('reset', () => {
+  pendingRisk = '';
+  setTimeout(() => {
+    form.elements.sort.value = 'latest';
+    syncSort();
+    dropdowns.forEach((dropdown) => dropdown.sync());
+    applyFilters();
+  }, 0);
+});
+moreFilters.addEventListener('click', () =>
+  setAdvancedOpen(advancedFilters.hidden),
+);
+sortToggle.addEventListener('click', () => {
+  form.elements.sort.value =
+    form.elements.sort.value === 'oldest' ? 'latest' : 'oldest';
+  syncSort();
+  applyFilters();
+});
 previous.addEventListener('click', () => {
   if (page > 1) {
     page--;
@@ -117,8 +251,33 @@ next.addEventListener('click', () => {
 });
 retry.addEventListener('click', loadRecalls);
 window.addEventListener('popstate', () => {
-  restorePage();
+  restoreFilters();
   loadRecalls();
 });
-restorePage();
+
+restoreFilters();
 loadRecalls();
+fetchRecallFilters()
+  .then((data) => {
+    categoryDropdown.setOptions([
+      { value: '', label: 'All categories' },
+      ...data.categories.map((category) => ({
+        value: category,
+        label: category,
+      })),
+    ]);
+    for (const risk of data.risks) {
+      const option = document.createElement('option');
+      option.value = risk.value;
+      option.textContent = risk.label;
+      form.elements.risk.append(option);
+    }
+    form.elements.risk.value = pendingRisk;
+    dropdowns.forEach((dropdown) => dropdown.sync());
+  })
+  .catch(() => {
+    form.elements.risk.disabled = true;
+    form.elements.risk.title =
+      'Risk filters could not be loaded. Reload the page to try again.';
+    dropdowns.forEach((dropdown) => dropdown.sync());
+  });

@@ -35,32 +35,73 @@ const risks = [
   { value: 'crash', label: 'Crash', pattern: /\b(crash|collision)/i },
 ];
 
-export async function readRecalls({ page, limit }) {
+export const riskOptions = risks.map(({ value, label }) => ({ value, label }));
+const anyRiskPattern = new RegExp(
+  risks.map(({ pattern }) => `(?:${pattern.source})`).join('|'),
+  'i',
+);
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+function recallFilter({ country, q, category, risk, updatedFrom, updatedTo }) {
+  const filter = {};
+  if (country) filter.country = country;
+  if (q) filter.searchText = { $regex: escapeRegex(q), $options: 'i' };
+  if (category)
+    filter.categories = { $regex: escapeRegex(category), $options: 'i' };
+  if (updatedFrom || updatedTo) {
+    filter.sourceUpdatedDate = {};
+    if (updatedFrom) filter.sourceUpdatedDate.$gte = updatedFrom;
+    if (updatedTo) filter.sourceUpdatedDate.$lte = updatedTo;
+  }
+  if (risk) {
+    const pattern = risks.find((item) => item.value === risk).pattern;
+    filter.$or = [
+      { title: pattern },
+      { title: { $not: anyRiskPattern }, hazards: pattern },
+    ];
+  }
+  return filter;
+}
+
+export async function readRecallFilters() {
+  const categories = await getDatabase()
+    .collection('recalls')
+    .distinct('categories', {}, { maxTimeMS: 5000 });
+  return {
+    categories: categories.filter(Boolean).sort((a, b) => a.localeCompare(b)),
+    risks: riskOptions,
+  };
+}
+
+export async function readRecalls({
+  page,
+  limit,
+  sort = 'latest',
+  ...filters
+}) {
   const collection = getDatabase().collection('recalls');
+  const filter = recallFilter(filters);
   const [items, total] = await Promise.all([
     collection
-      .find(
-        {},
-        {
-          projection: {
-            source: 1,
-            sourceId: 1,
-            country: 1,
-            title: 1,
-            products: 1,
-            categories: 1,
-            hazards: 1,
-            sourceUpdatedDate: 1,
-            recallDate: 1,
-          },
+      .find(filter, {
+        projection: {
+          source: 1,
+          sourceId: 1,
+          country: 1,
+          title: 1,
+          products: 1,
+          categories: 1,
+          hazards: 1,
+          sourceUpdatedDate: 1,
+          recallDate: 1,
         },
-      )
-      .sort({ sourceUpdatedDate: -1, _id: 1 })
+      })
+      .sort({ sourceUpdatedDate: sort === 'oldest' ? 1 : -1, _id: 1 })
       .skip((page - 1) * limit)
       .limit(limit)
       .maxTimeMS(5000)
       .toArray(),
-    collection.countDocuments({}, { maxTimeMS: 5000 }),
+    collection.countDocuments(filter, { maxTimeMS: 5000 }),
   ]);
 
   return {
