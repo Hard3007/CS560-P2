@@ -79,4 +79,4 @@ Keep database credentials in `.env` locally and Railway variables in production.
 
 ## License
 
-[MIT](LICENSE). The third-party font has a separate license.
+[MIT](LICENSE). The third-party font and university mark have separate terms.

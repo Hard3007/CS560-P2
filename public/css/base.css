@@ -43,6 +43,68 @@
   box-sizing: border-box;
 }
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   min-height: 100vh;
+  min-height: 100svh;
+}
+
+body > main {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.site-footer {
+  width: 100%;
+  margin-top: auto;
+  padding: 24px 30px;
+  border-top: 1px solid #e1e3e5;
+  flex-shrink: 0;
+  color: #737a80;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.site-footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+}
+
+.footer-university {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.university-seal {
+  --seal-size: 22px;
+  position: relative;
+  display: inline-block;
+  width: var(--seal-size);
+  height: var(--seal-size);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.university-seal img {
+  /* The original image has transparent padding around the seal. */
+  position: absolute;
+  width: calc(var(--seal-size) * 2.673629);
+  height: auto;
+  max-width: none;
+  left: calc(var(--seal-size) * -0.83812);
+  top: calc(var(--seal-size) * -0.276762);
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    padding-inline: 20px;
+  }
 }
