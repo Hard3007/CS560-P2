@@ -6,6 +6,8 @@ Track Products and Check Safety Recalls.
 **Course:** [CS5610 Web Development, Fall 2026](https://johnguerra.co/classes/webDevelopment_online_fall_2026/)  
 **Repository:** [infiniwire/CS560-P2](https://github.com/infiniwire/CS560-P2)
 
+**Live application:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
+
 ## Current state
 
 A minimal starting point with a RecallGuard logo above the My Products, Recall Explorer, and My Watchlist links. There is no body content or frontend JavaScript. Express serves the pages and a server-only MongoDB module supports production connection checks. Product CRUD, recall matching, watchlist features, and data import are not implemented.
@@ -31,6 +33,18 @@ npm run format
 ## Railway deployment
 
 The Dockerfile installs production dependencies and starts Express on `0.0.0.0` using Railway's `PORT`. The `production` environment must set `MONGODB_URI` to a reference to its MongoDB service's private connection URL, and `MONGODB_DB` to `recallguard`. Keep connection credentials in Railway variables, never in frontend code or Git.
+
+The RecallGuard Railway project contains the `CS560-P2` application and a MongoDB service with persistent storage in `production`. The application automatically deploys from GitHub `main`. The service uses the detected Dockerfile, public target port 8080, and `/health` as its deployment health check. These service settings are configured in Railway.
+
+Runtime variables:
+
+```text
+NODE_ENV=production
+MONGODB_URI=${{MongoDB.MONGO_URL}}
+MONGODB_DB=recallguard
+```
+
+The URI above is a Railway reference expression, not a credential. MongoDB is reached over Railway private networking.
 
 Production startup requires a successful MongoDB connection and ping. `/health` and `/api/health` repeat a bounded database ping and return HTTP 503 if it fails. Local preview without a URI returns `database: "not_configured"`; it does not claim database connectivity. Health responses include the Railway Git revision when available.
 
