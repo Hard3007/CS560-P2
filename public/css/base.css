@@ -7,6 +7,7 @@
 }
 
 :root {
+  scrollbar-gutter: stable;
   color-scheme: light;
   font-family:
     'Alliance No.1',
@@ -30,6 +31,12 @@
   background: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@supports not (scrollbar-gutter: stable) {
+  :root {
+    overflow-y: scroll;
+  }
 }
 
 * {

@@ -6,6 +6,8 @@
     <title>Recall Explorer | RecallGuard</title>
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/components/navigation.css" />
+    <link rel="stylesheet" href="/css/recalls.css" />
+    <script type="module" src="/js/explorer.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -23,5 +25,74 @@
         </ul>
       </nav>
     </header>
+    <main class="explorer page-content">
+      <section id="results" aria-label="Recall results" aria-busy="true">
+        <div class="results-heading">
+          <p id="result-count" role="status">Loading recalls…</p>
+        </div>
+        <div class="table-container">
+          <table class="recall-table">
+            <caption class="sr-only">
+              Product recalls.
+            </caption>
+            <colgroup>
+              <col class="recall-col" />
+              <col class="country-col" />
+              <col class="category-col" />
+              <col class="risk-col" />
+              <col class="date-col" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Recall</th>
+                <th scope="col">
+                  <span class="desktop-country-heading">Country</span
+                  ><span class="mobile-country-heading">From</span>
+                </th>
+                <th scope="col" class="category-cell">Category</th>
+                <th scope="col">Risk</th>
+                <th scope="col" class="date-cell">Updated</th>
+              </tr>
+            </thead>
+            <tbody id="recall-rows"></tbody>
+          </table>
+        </div>
+        <div id="list-message" class="list-message" hidden>
+          <h2 id="message-title"></h2>
+          <p id="message-description"></p>
+          <button id="retry" type="button" class="outline-button" hidden>
+            Try again
+          </button>
+        </div>
+        <nav class="pagination" aria-label="Recall result pages">
+          <p id="page-summary"></p>
+          <div class="page-controls">
+            <button id="previous" type="button" class="outline-button" disabled>
+              ← Previous</button
+            ><span id="page-number"></span
+            ><button id="next" type="button" class="outline-button" disabled>
+              Next →
+            </button>
+          </div>
+        </nav>
+      </section>
+      <noscript
+        ><p>Enable JavaScript to browse the recall records.</p></noscript
+      >
+    </main>
+    <template id="row-template">
+      <tr>
+        <td class="recall-cell">
+          <span class="recall-link"></span><span class="recall-subtitle"></span
+          ><span class="mobile-meta"></span>
+        </td>
+        <td class="country-cell">
+          <span class="country-label"><img alt="" /><span></span></span>
+        </td>
+        <td class="category-cell"></td>
+        <td class="risk-cell"></td>
+        <td class="date-cell"></td>
+      </tr>
+    </template>
   </body>
 </html>
