@@ -23,7 +23,9 @@ npm ci
 npm run dev
 ```
 
-Open <http://localhost:4173>. `npm start` runs without file watching. MongoDB is optional for local preview. Copy `.env.example` to `.env` to configure a local connection. Port 4173 is used because port 3000 is reserved on the development machine.
+Open <http://localhost:4173>. `npm start` runs without file watching. Copy `.env.example` to `.env` and set `MONGODB_PUBLIC_URI` to the resolved `MONGO_PUBLIC_URL` from the Railway MongoDB service. Local development automatically loads `.env` and prefers this public connection; it can fall back to `MONGODB_URI`. If both are blank, local preview runs without MongoDB. Port 4173 is used because port 3000 is reserved on the development machine.
+
+Railway deployments (identified by `RAILWAY_ENVIRONMENT_ID`) and any process with `NODE_ENV=production` use only `MONGODB_URI`, regardless of `MONGODB_PUBLIC_URI`. Keep the public URL in the ignored local `.env`, never in source files. Both local and production connections use the `recallguard` database. Opening <http://localhost:4173/health> verifies the actual database ping; a successful connection returns `database: "connected"`.
 
 ```sh
 npm run check
