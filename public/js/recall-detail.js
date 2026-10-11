@@ -4,9 +4,14 @@ import { countries, formatDate, safeUrl } from './recall-utils.js';
 const query = new URLSearchParams(location.search);
 const status = document.querySelector('#detail-status');
 const returnQuery = query.get('return') || '';
+const backLink = document.querySelector('#back-link');
+const fromProducts = query.get('from') === 'products';
+if (fromProducts) {
+  backLink.href = '/products.html';
+  backLink.textContent = 'Back to My Products';
+}
 if (returnQuery.startsWith('?'))
-  document.querySelector('#back-link').href =
-    `/recalls.html?${new URLSearchParams(returnQuery)}`;
+  backLink.href = `${fromProducts ? '/products.html' : '/recalls.html'}?${new URLSearchParams(returnQuery)}`;
 
 function addSection(title, paragraphs) {
   const section = document.createElement('section');

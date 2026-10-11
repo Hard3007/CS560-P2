@@ -12,7 +12,7 @@ Track products you own and check for safety recalls.
 
 RecallGuard brings together recall records from the U.S. Consumer Product Safety Commission (CPSC) and Health Canada. Users will be able to keep a list of their products, look for possible recalls, and save notices to a watchlist.
 
-The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. Recall Explorer lists the imported notices with country, keyword, category, and risk filters. Each row opens the full recall details. The product and watchlist features are still under development.
+The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. My Products lets users add, edit, delete and filter their products, then check for possible recall matches. Recall Explorer lists the imported notices with country, keyword, category, and risk filters. Each row opens the full recall details. The watchlist is still under development.
 
 The initial data import contains 15,262 notices: 10,047 from CPSC and 5,215 from Health Canada. They are stored in `recallguard.recalls` using the same 22-field structure. See [recall data](data/README.md) for the fields and source details.
 
@@ -45,11 +45,21 @@ npm run format
 
 The app does not require a login. On the first visit, the browser generates a random UUID and saves it in `localStorage` as `recallguard.userId`. API requests made through the frontend API module include it in the `X-User-Id` header. The same browser keeps this ID across page navigation and reloads.
 
-Products and watchlist records will use this ID when those features are implemented. The current recall endpoints still return shared public data. This ID is not authentication. Clearing site data, using a different browser, or changing the site origin creates a separate identity; localhost and the deployed site do not share one. Product and watchlist content will be stored in MongoDB.
+Products and future watchlist records use this ID. The recall endpoints still return shared public data. This ID is not authentication. Clearing site data, using a different browser, or changing the site origin creates a separate identity; localhost and the deployed site do not share one. Product and watchlist content is stored in MongoDB.
 
 Each page records a visit through `POST /api/user`. API requests carrying a valid `X-User-Id` update the user's `lastSeenAt` and renew the expiration of their products and watchlist for another 365 days. Health checks do not count as user activity.
 
-MongoDB TTL indexes on `users`, `products`, and `watchlist` remove records after `expiresAt`. Cleanup runs in MongoDB even when the web server is stopped, with a short background-processing delay. Returning after expiration also removes expired personal records before renewing the ID. Shared `recalls` never expire under this policy. Future product and watchlist writes must store `userId` and `expiresAt` from `req.user`; clients cannot set their own expiration date.
+MongoDB TTL indexes on `users`, `products`, and `watchlist` remove records after `expiresAt`. Cleanup runs in MongoDB even when the web server is stopped, with a short background-processing delay. Returning after expiration also removes expired personal records before renewing the ID. Shared `recalls` never expire under this policy. Product writes store `userId` and `expiresAt` from `req.user`; future watchlist writes must do the same. Clients cannot set their own expiration date.
+
+## My Products
+
+The homepage at `/` introduces RecallGuard and links to the three features. My Products is at `/products.html`, Recall Explorer at `/recalls.html`, and My Watchlist at `/watchlist.html`. Feature pages keep the navigation tabs; the RecallGuard logo returns to the homepage.
+
+Choose Add product, enter a product name, and optionally add a brand, model and category. Select the United States or Canada using the flags, or leave All selected to search both countries. Edit or delete a product using its row actions. Use the search field and brand/category filters to find an item in your list.
+
+Check recalls searches the imported recall search text for the product name, within the saved country. Brand keywords are checked in both the recall search text and Consumer contact; model keywords are checked in the recall search text. Common words such as “the” and “and” are ignored. Notices that also contain the supplied brand and model keywords appear first, followed by the remaining product-name matches. Each group is ordered by its update date, newest first. Missing or incorrect brand/model information does not exclude product-name matches. The search field in Possible recalls narrows this list by another keyword or phrase in either the recall search text or Consumer contact; clearing it restores the full list. Results are possible matches, not a determination that a product is affected or safe. Open a result to check the full government notice, or use Recall Explorer for a broader search.
+
+The product API requires `X-User-Id`. `GET /api/products` accepts `q`, `brand`, `category`, `page` and `limit`, and returns the current user's products and filter options. `POST /api/products` creates a product, `PUT /api/products/:id` edits it, and `DELETE /api/products/:id` removes it. The editable fields are `name` (required), `brand`, `model`, `category` and `country` (`US`, `CA`, or an empty string for both). Products without a country also search both countries. `GET /api/products/:id/recalls` returns paginated possible matches and accepts `q` to narrow them. Every product operation is scoped to the supplied browser ID.
 
 ## Recall API
 

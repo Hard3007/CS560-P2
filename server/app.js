@@ -4,6 +4,7 @@ import { config } from './config.js';
 import { checkDatabase } from './db/connection.js';
 import { recallsRouter } from './routes/recalls.js';
 import { trackUserActivity } from './middleware/user.js';
+import { productsRouter } from './routes/products.js';
 
 export function createApp() {
   const app = express();
@@ -30,6 +31,7 @@ export function createApp() {
     res.json(req.user);
   });
   app.use('/api/recalls', recallsRouter);
+  app.use('/api/products', productsRouter);
 
   app.use(
     express.static(fileURLToPath(new URL('../public/', import.meta.url))),

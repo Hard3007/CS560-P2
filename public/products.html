@@ -7,7 +7,10 @@
     <link rel="icon" type="image/png" href="/assets/recallguard-mark.png" />
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/components/navigation.css" />
-    <script type="module" src="/js/user.js"></script>
+    <link rel="stylesheet" href="/css/products.css" />
+    <link rel="stylesheet" href="/css/components/dropdown.css" />
+    <link rel="stylesheet" href="/css/components/country-picker.css" />
+    <script type="module" src="/js/products.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -23,6 +26,393 @@
         </ul>
       </nav>
     </header>
+    <main class="products-page">
+      <div class="products-heading">
+        <p>Keep your products here and check for possible recalls.</p>
+        <button id="add-product" class="solid-button" type="button">
+          Add product <span aria-hidden="true">＋</span>
+        </button>
+      </div>
+      <form
+        id="product-filters"
+        class="product-filters"
+        role="search"
+        aria-label="Find your products"
+      >
+        <div class="product-search">
+          <label for="product-search">Search</label>
+          <div class="search-control">
+            <input
+              id="product-search"
+              name="q"
+              type="search"
+              maxlength="160"
+              placeholder="Product, brand or model"
+              autocomplete="off"
+            />
+            <button type="submit" class="solid-button">Search</button>
+          </div>
+        </div>
+        <div class="filter-field">
+          <label id="brand-label" for="brand-trigger">Brand</label>
+          <div class="dropdown" data-dropdown>
+            <select name="brand" id="brand-filter" hidden>
+              <option value="">All brands</option>
+            </select>
+            <button
+              id="brand-trigger"
+              class="dropdown-trigger"
+              type="button"
+              role="combobox"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-controls="brand-options"
+              aria-labelledby="brand-label brand-value"
+            >
+              <span id="brand-value">All brands</span>
+            </button>
+            <div
+              id="brand-options"
+              class="dropdown-menu"
+              role="listbox"
+              aria-labelledby="brand-label"
+              hidden
+            ></div>
+          </div>
+        </div>
+        <div class="filter-field">
+          <label id="category-label" for="category-trigger">Category</label>
+          <div class="dropdown" data-dropdown>
+            <select name="category" id="category-filter" hidden>
+              <option value="">All categories</option>
+            </select>
+            <button
+              id="category-trigger"
+              class="dropdown-trigger"
+              type="button"
+              role="combobox"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              aria-controls="category-options"
+              aria-labelledby="category-label category-value"
+            >
+              <span id="category-value">All categories</span>
+            </button>
+            <div
+              id="category-options"
+              class="dropdown-menu"
+              role="listbox"
+              aria-labelledby="category-label"
+              hidden
+            ></div>
+          </div>
+        </div>
+        <button type="reset" class="text-button clear-filters">Clear</button>
+      </form>
+      <p id="product-notice" class="product-notice" role="status" hidden></p>
+      <section id="product-results" aria-label="Your products" aria-busy="true">
+        <div class="results-heading">
+          <p id="product-count" role="status">Loading products…</p>
+          <span>Newest added first</span>
+        </div>
+        <div id="product-table-container">
+          <table class="product-table">
+            <caption class="sr-only">
+              Products you own
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Country</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Category</th>
+                <th scope="col"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="product-rows"></tbody>
+          </table>
+        </div>
+        <div id="product-message" class="empty-state" hidden>
+          <p id="product-message-title"></p>
+          <p id="product-message-description"></p>
+          <button
+            id="product-retry"
+            type="button"
+            class="outline-button"
+            hidden
+          >
+            Try again
+          </button>
+        </div>
+        <nav
+          id="product-pagination"
+          class="product-pagination"
+          aria-label="Product pages"
+          hidden
+        >
+          <button id="product-previous" class="outline-button" type="button">
+            Previous</button
+          ><span id="product-page"></span
+          ><button id="product-next" class="outline-button" type="button">
+            Next
+          </button>
+        </nav>
+      </section>
+      <noscript><p>Enable JavaScript to manage your products.</p></noscript>
+    </main>
+
+    <dialog
+      id="product-dialog"
+      class="products-dialog"
+      aria-labelledby="product-dialog-title"
+    >
+      <form id="product-form">
+        <div class="dialog-heading">
+          <h1 id="product-dialog-title">Add product</h1>
+          <button
+            type="button"
+            class="close-dialog"
+            aria-label="Close product form"
+          >
+            ×
+          </button>
+        </div>
+        <p class="dialog-description">
+          Use the name on the product or packaging. Brand and model help narrow
+          recall searches.
+        </p>
+        <div class="product-fields">
+          <fieldset class="country-filter wide-field">
+            <legend>Country</legend>
+            <div class="country-options">
+              <label
+                ><input type="radio" name="country" value="" checked /><span
+                  >All</span
+                ></label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="country"
+                  value="US"
+                  aria-label="United States"
+                /><span
+                  ><img src="/assets/flag-us.svg" alt="" /><span
+                    class="country-name"
+                    >United States</span
+                  ><span class="country-code" aria-hidden="true">US</span></span
+                ></label
+              >
+              <label
+                ><input
+                  type="radio"
+                  name="country"
+                  value="CA"
+                  aria-label="Canada"
+                /><span
+                  ><img src="/assets/flag-ca.svg" alt="" /><span
+                    class="country-name"
+                    >Canada</span
+                  ><span class="country-code" aria-hidden="true">CA</span></span
+                ></label
+              >
+            </div>
+          </fieldset>
+          <div class="wide-field">
+            <label for="product-name"
+              >Product name <span aria-hidden="true">*</span></label
+            ><input
+              id="product-name"
+              name="name"
+              maxlength="160"
+              required
+              placeholder="e.g. Air fryer"
+            />
+          </div>
+          <div>
+            <label for="product-brand">Brand</label
+            ><input
+              id="product-brand"
+              name="brand"
+              maxlength="80"
+              placeholder="e.g. Ninja"
+            />
+          </div>
+          <div>
+            <label for="product-model">Model</label
+            ><input
+              id="product-model"
+              name="model"
+              maxlength="100"
+              placeholder="Model number, if known"
+            />
+          </div>
+          <div class="wide-field">
+            <label for="product-category">Category</label>
+            <div id="product-category-dropdown" class="dropdown">
+              <input
+                id="product-category"
+                name="category"
+                maxlength="80"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="product-category-options"
+                aria-expanded="false"
+                autocomplete="off"
+                placeholder="Choose or enter a category"
+              />
+              <button
+                type="button"
+                class="dropdown-toggle"
+                aria-label="Show product categories"
+                tabindex="-1"
+              ></button>
+              <div
+                id="product-category-options"
+                class="dropdown-menu"
+                role="listbox"
+                aria-label="Product categories"
+                hidden
+              ></div>
+            </div>
+          </div>
+        </div>
+        <p id="product-form-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button type="button" class="outline-button close-dialog">
+            Cancel</button
+          ><button type="submit" id="save-product" class="solid-button">
+            Save product
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog
+      id="delete-dialog"
+      class="products-dialog small-dialog"
+      aria-labelledby="delete-title"
+    >
+      <form id="delete-form">
+        <div class="dialog-heading">
+          <h1 id="delete-title">Delete product?</h1>
+          <button
+            type="button"
+            class="close-dialog"
+            aria-label="Close delete confirmation"
+          >
+            ×
+          </button>
+        </div>
+        <p class="dialog-description">
+          Remove <strong id="delete-product-name"></strong> from your products?
+          This cannot be undone.
+        </p>
+        <p id="delete-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button type="button" class="outline-button close-dialog">
+            Cancel</button
+          ><button type="submit" id="confirm-delete" class="solid-button">
+            Delete product
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog
+      id="matches-dialog"
+      class="products-dialog matches-dialog"
+      aria-labelledby="matches-title"
+    >
+      <div class="dialog-heading">
+        <h1 id="matches-title">Possible recalls</h1>
+        <button
+          type="button"
+          class="close-dialog"
+          aria-label="Close possible recalls"
+        >
+          ×
+        </button>
+      </div>
+      <form
+        id="match-search-form"
+        class="match-search-form"
+        role="search"
+        aria-label="Search possible recalls"
+      >
+        <label for="match-search" class="sr-only"
+          >Search possible recalls</label
+        >
+        <div class="search-control">
+          <input
+            id="match-search"
+            name="q"
+            type="search"
+            maxlength="160"
+            placeholder="Search these recalls"
+            autocomplete="off"
+          /><button class="solid-button" type="submit">Search</button>
+        </div>
+      </form>
+      <section
+        id="match-results"
+        aria-label="Possible recall matches"
+        aria-busy="true"
+      >
+        <p id="match-count" role="status">Checking recalls…</p>
+        <ul id="match-list" class="match-list"></ul>
+        <div id="match-message" class="empty-state" hidden>
+          <p id="match-message-text"></p>
+          <button id="match-retry" class="outline-button" type="button" hidden>
+            Try again
+          </button>
+        </div>
+        <nav
+          id="match-pagination"
+          class="product-pagination"
+          aria-label="Recall match pages"
+          hidden
+        >
+          <button id="match-previous" class="outline-button" type="button">
+            Previous</button
+          ><span id="match-page"></span
+          ><button id="match-next" class="outline-button" type="button">
+            Next
+          </button>
+        </nav>
+      </section>
+    </dialog>
+    <template id="product-row-template"
+      ><tr>
+        <td>
+          <span class="product-name"></span>
+          <span class="product-model"></span>
+        </td>
+        <td class="product-country-cell" data-label="Country">
+          <span class="product-country" hidden
+            ><img alt="" width="22" height="15" /><span></span
+          ></span>
+          <span class="product-country-all">All</span>
+        </td>
+        <td class="product-brand" data-label="Brand"></td>
+        <td class="product-category" data-label="Category"></td>
+        <td>
+          <div class="row-actions">
+            <button type="button" data-action="check">
+              Check recalls <span aria-hidden="true">↗</span></button
+            ><button type="button" data-action="edit">Edit</button
+            ><button type="button" data-action="delete">Delete</button>
+          </div>
+        </td>
+      </tr></template
+    >
+    <template id="match-template"
+      ><li>
+        <a class="match-link"></a>
+        <div class="match-meta">
+          <span class="match-country"
+            ><img alt="" width="20" height="14" /><span></span></span
+          ><span class="match-date"></span>
+        </div></li
+    ></template>
     <footer class="site-footer">
       <p>
         Sheng, Tian · CS5610 Project 2 ·
