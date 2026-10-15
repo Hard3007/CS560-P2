@@ -7,7 +7,8 @@
     <link rel="icon" type="image/png" href="/assets/recallguard-mark.png" />
     <link rel="stylesheet" href="/css/base.css" />
     <link rel="stylesheet" href="/css/components/navigation.css" />
-    <script type="module" src="/js/user.js"></script>
+    <link rel="stylesheet" href="/css/watchlist.css" />
+    <script type="module" src="/js/watchlist.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -25,6 +26,26 @@
         </ul>
       </nav>
     </header>
+    <main class="page-content watchlist">
+      <h1>My Watchlist</h1>
+      <p>
+        Save recalls in <a href="/recalls.html">Recall Explorer</a>, then track
+        your next steps here. Open the notice to verify the product and follow
+        official instructions.
+      </p>
+      <p>
+        Your list belongs to this browser. Clearing browser storage loses
+        access; records expire after one year of inactivity.
+      </p>
+      <p id="watchlist-message" role="status">Loading watchlist…</p>
+      <button id="reload" type="button">Refresh list</button>
+      <section
+        id="watchlist-items"
+        aria-label="Saved recalls"
+        aria-busy="true"
+      ></section>
+      <noscript>Enable JavaScript to manage your watchlist.</noscript>
+    </main>
     <footer class="site-footer">
       <p>
         Sheng, Tian · CS5610 Project 2 ·

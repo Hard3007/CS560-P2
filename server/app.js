@@ -1,4 +1,5 @@
 import express from 'express';
+import { watchlistRouter } from './routes/watchlist.js';
 import { fileURLToPath } from 'node:url';
 import { config } from './config.js';
 import { checkDatabase } from './db/connection.js';
@@ -32,6 +33,7 @@ export function createApp() {
   });
   app.use('/api/recalls', recallsRouter);
   app.use('/api/products', productsRouter);
+  app.use('/api/watchlist', watchlistRouter);
 
   app.use(
     express.static(fileURLToPath(new URL('../public/', import.meta.url))),

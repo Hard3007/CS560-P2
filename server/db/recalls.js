@@ -42,10 +42,28 @@ const anyRiskPattern = new RegExp(
 );
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-function recallFilter({ country, q, category, risk, updatedFrom, updatedTo }) {
+export function recallFilter({
+  country,
+  q,
+  brand,
+  category,
+  risk,
+  updatedFrom,
+  updatedTo,
+}) {
   const filter = {};
   if (country) filter.country = country;
   if (q) filter.searchText = { $regex: escapeRegex(q), $options: 'i' };
+  if (brand)
+    filter.$and = [
+      {
+        $or: ['brands', 'manufacturers', 'searchText', 'consumerContact'].map(
+          (field) => ({
+            [field]: { $regex: escapeRegex(brand), $options: 'i' },
+          }),
+        ),
+      },
+    ];
   if (category)
     filter.categories = { $regex: escapeRegex(category), $options: 'i' };
   if (updatedFrom || updatedTo) {

@@ -1,3 +1,4 @@
+import { saveButton } from './save-recall.js';
 import { fetchRecall } from './api.js';
 import { countries, formatDate, safeUrl } from './recall-utils.js';
 import { openImageViewer } from './image-viewer.js';
@@ -6,13 +7,23 @@ const query = new URLSearchParams(location.search);
 const status = document.querySelector('#detail-status');
 const returnQuery = query.get('return') || '';
 const backLink = document.querySelector('#back-link');
-const fromProducts = query.get('from') === 'products';
-if (fromProducts) {
-  backLink.href = '/products.html';
-  backLink.textContent = 'Back to My Products';
-}
+const origin = query.get('from');
+const destinations = {
+  products: { path: '/products.html', label: '← Back to My Products' },
+  watchlist: { path: '/watchlist.html', label: '← Back to Watchlist' },
+};
+const destination = Object.hasOwn(destinations, origin)
+  ? destinations[origin]
+  : { path: '/recalls.html', label: '← Back to recalls' };
+backLink.href = destination.path;
+backLink.textContent = destination.label;
 if (returnQuery.startsWith('?'))
-  backLink.href = `${fromProducts ? '/products.html' : '/recalls.html'}?${new URLSearchParams(returnQuery)}`;
+  backLink.href = `${destination.path}?${new URLSearchParams(returnQuery)}`;
+for (const link of document.querySelectorAll('.tabs a')) {
+  link.removeAttribute('aria-current');
+  if (link.getAttribute('href') === destination.path)
+    link.setAttribute('aria-current', 'page');
+}
 
 function addSection(title, paragraphs) {
   const section = document.createElement('section');
@@ -48,6 +59,7 @@ async function loadRecall() {
         'This recall link is invalid. Return to the explorer to choose a notice.',
       );
     const recall = await fetchRecall(source, id);
+    document.querySelector('#detail-title').after(saveButton(source, id));
     const country = countries[recall.country];
     document.title = `${recall.products[0]?.name || 'Recall details'} | RecallGuard`;
     document.querySelector('#detail-title').textContent = recall.title;

@@ -1,3 +1,4 @@
+import { saveButton } from './save-recall.js';
 import { fetchRecalls, fetchRecallFilters } from './api.js';
 import { countries, formatDate } from './recall-utils.js';
 import { Dropdown } from './dropdown.js';
@@ -62,7 +63,7 @@ function restoreFilters() {
   const country = query.get('country') || '';
   for (const input of form.elements.country)
     input.checked = input.value === (countries[country] ? country : '');
-  for (const name of ['q', 'category', 'updatedFrom', 'updatedTo'])
+  for (const name of ['q', 'brand', 'category', 'updatedFrom', 'updatedTo'])
     form.elements[name].value = query.get(name) || '';
   form.elements.sort.value =
     query.get('sort') === 'oldest' ? 'oldest' : 'latest';
@@ -145,9 +146,12 @@ function renderRow(recall) {
   );
   fragment.querySelector('.mobile-meta').textContent =
     `Updated ${formatDate(recall.sourceUpdatedDate)}`;
+  fragment
+    .querySelector('.recall-cell')
+    .append(saveButton(recall.source, recall.sourceId));
   row.addEventListener('click', (event) => {
     if (
-      event.target.closest('a') ||
+      event.target.closest('a, button') ||
       event.button !== 0 ||
       window.getSelection()?.toString()
     )
@@ -225,7 +229,7 @@ form.addEventListener('submit', (event) => {
   applyFilters();
 });
 form.addEventListener('input', (event) => {
-  if (!['q', 'category'].includes(event.target.name)) return;
+  if (!['q', 'brand', 'category'].includes(event.target.name)) return;
   clearTimeout(timer);
   timer = setTimeout(applyFilters, 350);
 });
