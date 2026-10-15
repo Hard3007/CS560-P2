@@ -1,0 +1,204 @@
+.watchlist {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 48px 32px 64px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #252b30;
+}
+
+.watchlist h1 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.watchlist > p {
+  max-width: 760px;
+  margin: 0 0 16px;
+  color: #626b74;
+}
+
+.watchlist a {
+  color: #28544d;
+  text-decoration-color: #a7bbb6;
+  text-underline-offset: 4px;
+}
+
+.watchlist a:hover {
+  color: #153e37;
+  text-decoration-color: currentColor;
+}
+
+.watchlist > p:nth-of-type(2) {
+  margin: 20px 0 28px;
+  padding: 12px 16px;
+  border-left: 3px solid #bacfc7;
+  border-radius: 0 6px 6px 0;
+  background: #f4f7f5;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.watchlist #watchlist-message {
+  display: inline-block;
+  margin: 0 16px 16px 0;
+  color: #45534e;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.watchlist button {
+  min-height: 42px;
+  padding: 10px 18px;
+  border: 1px solid #d7dedb;
+  border-radius: 7px;
+  background: #fff;
+  color: #354740;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.watchlist button:hover:not(:disabled) {
+  border-color: #a9bbb1;
+  background: #f2f6f3;
+}
+
+.watchlist button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.watchlist #reload {
+  margin-bottom: 16px;
+}
+
+.watchlist article {
+  margin: 12px 0 24px;
+  padding: 28px;
+  border: 1px solid #e0e6e2;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 18px rgb(24 47 35 / 4%);
+}
+
+.watchlist h2 {
+  margin: 0 0 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #edf0ed;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
+}
+
+.watchlist h2 a {
+  color: #243c32;
+  text-decoration: none;
+}
+
+.watchlist h2 a:hover {
+  text-decoration: underline;
+}
+
+.watchlist label {
+  display: block;
+  margin: 0 0 20px;
+  color: #53605a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.watchlist select,
+.watchlist textarea {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 1px solid #d5ded8;
+  border-radius: 7px;
+  background: #fafcfb;
+  color: #283830;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.watchlist select {
+  max-width: 340px;
+  min-height: 46px;
+}
+
+.watchlist textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.watchlist :is(button, select, textarea, a):focus-visible {
+  outline: 3px solid #77a595;
+  outline-offset: 3px;
+}
+
+.watchlist button[type='submit'] {
+  margin-right: 10px;
+  border-color: #274d3e;
+  background: #274d3e;
+  color: #fff;
+}
+
+.watchlist button[type='submit']:hover:not(:disabled) {
+  border-color: #18382b;
+  background: #18382b;
+}
+
+.watchlist form > button[type='button'] {
+  border-color: #e6d8d4;
+  color: #934738;
+}
+
+.watchlist form > button[type='button']:hover:not(:disabled) {
+  border-color: #d6b7af;
+  background: #fcf4f2;
+}
+
+.watchlist form > p {
+  margin: 14px 0 0;
+  color: #53605a;
+  font-size: 13px;
+}
+
+.watchlist form > p:empty {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .watchlist {
+    padding: 28px 18px 40px;
+    font-size: 15px;
+  }
+  .watchlist article {
+    padding: 20px;
+  }
+  .watchlist h2 {
+    font-size: 18px;
+  }
+  .watchlist select {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watchlist button {
+    transition: none;
+  }
+}

@@ -12,6 +12,12 @@ export async function ensureUserIndexes(database) {
         ),
     ),
   );
+  await database
+    .collection('watchlist')
+    .createIndex(
+      { userId: 1, source: 1, sourceId: 1 },
+      { unique: true, name: 'unique_saved_recall' },
+    );
   await Promise.all(
     personalCollections.map((name) =>
       database.collection(name).createIndex({ userId: 1 }),

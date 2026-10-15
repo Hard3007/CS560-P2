@@ -29,6 +29,7 @@ export async function fetchRecalls({
   limit = 20,
   country = '',
   q = '',
+  brand = '',
   category = '',
   risk = '',
   sort = 'latest',
@@ -41,6 +42,7 @@ export async function fetchRecalls({
     limit: String(limit),
     country,
     q,
+    brand,
     category,
     risk,
     sort,
@@ -85,3 +87,19 @@ export function fetchProductRecalls(id, { page = 1, q = '', signal } = {}) {
     signal,
   );
 }
+
+export const fetchWatchlist = () => fetchJson('/api/watchlist');
+export const saveRecall = (source, sourceId) =>
+  fetchJson('/api/watchlist', undefined, {
+    method: 'POST',
+    data: { source, sourceId },
+  });
+export const updateWatchlist = (id, data) =>
+  fetchJson(`/api/watchlist/${encodeURIComponent(id)}`, undefined, {
+    method: 'PATCH',
+    data,
+  });
+export const deleteWatchlist = (id) =>
+  fetchJson(`/api/watchlist/${encodeURIComponent(id)}`, undefined, {
+    method: 'DELETE',
+  });

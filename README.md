@@ -12,7 +12,7 @@ Track products you own and check for safety recalls.
 
 RecallGuard brings together recall records from the U.S. Consumer Product Safety Commission (CPSC) and Health Canada. Users will be able to keep a list of their products, look for possible recalls, and save notices to a watchlist.
 
-The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. My Products lets users add, edit, delete and filter their products, then check for possible recall matches. Recall Explorer lists the imported notices with country, keyword, category, and risk filters. Each row opens the full recall details. The watchlist is still under development.
+The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. My Products lets users add, edit, delete and filter their products, then check for possible recall matches. Recall Explorer lists the imported notices with country, keyword, category, and risk filters. Each row opens the full recall details. My Watchlist saves notices and supports editing status and notes and removing entries.
 
 The initial data import contains 15,262 notices: 10,047 from CPSC and 5,215 from Health Canada. They are stored in `recallguard.recalls` using the same 22-field structure. See [recall data](data/README.md) for the fields and source details.
 
@@ -32,7 +32,7 @@ npm run dev
 
 Open <http://localhost:4173>. Use `npm start` to run without file watching.
 
-Local development loads `.env` and uses `MONGODB_PUBLIC_URI`, falling back to `MONGODB_URI`. Without either setting, the page can run without a database connection. The local connection points to the same Railway database used in production.
+Local development loads `.env` and uses `MONGODB_PUBLIC_URI`, falling back to `MONGODB_URI`. Without either setting, the page can run without a database connection. Use a separate development database for local work. Configure its URI rather than using production credentials.
 
 To check formatting and lint rules:
 
@@ -45,11 +45,11 @@ npm run format
 
 The app does not require a login. On the first visit, the browser generates a random UUID and saves it in `localStorage` as `recallguard.userId`. API requests made through the frontend API module include it in the `X-User-Id` header. The same browser keeps this ID across page navigation and reloads.
 
-Products and future watchlist records use this ID. The recall endpoints still return shared public data. This ID is not authentication. Clearing site data, using a different browser, or changing the site origin creates a separate identity; localhost and the deployed site do not share one. Product and watchlist content is stored in MongoDB.
+Products and watchlist records use this ID. The recall endpoints still return shared public data. This ID is not authentication. Clearing site data, using a different browser, or changing the site origin creates a separate identity; localhost and the deployed site do not share one. Product and watchlist content is stored in MongoDB.
 
 Each page records a visit through `POST /api/user`. API requests carrying a valid `X-User-Id` update the user's `lastSeenAt` and renew the expiration of their products and watchlist for another 365 days. Health checks do not count as user activity.
 
-MongoDB TTL indexes on `users`, `products`, and `watchlist` remove records after `expiresAt`. Cleanup runs in MongoDB even when the web server is stopped, with a short background-processing delay. Returning after expiration also removes expired personal records before renewing the ID. Shared `recalls` never expire under this policy. Product writes store `userId` and `expiresAt` from `req.user`; future watchlist writes must do the same. Clients cannot set their own expiration date.
+MongoDB TTL indexes on `users`, `products`, and `watchlist` remove records after `expiresAt`. Cleanup runs in MongoDB even when the web server is stopped, with a short background-processing delay. Returning after expiration also removes expired personal records before renewing the ID. Shared `recalls` never expire under this policy. Product writes store `userId` and `expiresAt` from `req.user`; watchlist writes do the same. Clients cannot set their own expiration date.
 
 ## My Products
 
@@ -100,3 +100,24 @@ Keep database credentials in `.env` locally and Railway variables in production.
 ## License
 
 [MIT](LICENSE). The third-party font and university mark have separate terms.
+
+## Tian Yuan: Recall Watchlist
+
+Use Recall Explorer to search product names or keywords, filter by brand/manufacturer, category, risk, country or update date, and change the sort order. Filters are combined and recorded in the URL. Brand/manufacturer searches also include search text and consumer contact because the imported structured brands are empty (see data/README.md). No missing brand is inferred.
+
+Choose **Save to Watchlist** on a result or its detail page. Repeated saves keep the existing status and notes. Open **My Watchlist**, select Reviewing, Contacted Manufacturer, or Resolved, enter up to 2000 characters of notes and choose **Save changes**. **Remove** asks for confirmation. Refreshing or reopening the same browser preserves saved data in MongoDB.
+
+| Method | Endpoint           | Result                                                 |
+| ------ | ------------------ | ------------------------------------------------------ |
+| GET    | /api/watchlist     | Current browser's saved items                          |
+| POST   | /api/watchlist     | Save `{source, sourceId}`; repeat saves are idempotent |
+| PATCH  | /api/watchlist/:id | Update status and/or notes                             |
+| DELETE | /api/watchlist/:id | Remove an owned item; 204 on success                   |
+
+All watchlist endpoints require X-User-Id and return JSON errors for invalid input (400), missing records (404), unavailable database (503), or oversized bodies (413). A unique MongoDB index on userId/source/sourceId prevents concurrent duplicate saves. Shared recall records remain read-only. Browser UUIDs isolate records but are not secure authentication: anyone with the ID can access those records. Do not put sensitive personal information in notes.
+
+Run `npm test` for HTTP contract tests with an isolated fake repository and recall query tests, and `npm run check` for lint and formatting. These tests do not replace MongoDB/deployed browser checks. See docs/TESTING.md and docs/DESIGN.md.
+
+## Credentials
+
+Previously shared screenshots exposed MongoDB credentials. Rotate the password in the database service and update the application's environment variables. Never commit `.env`; only `.env.example` is included. No real connection credentials are needed for the automated tests.

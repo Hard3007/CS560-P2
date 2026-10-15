@@ -29,6 +29,7 @@ recallsRouter.get('/', async (req, res) => {
     limit = '20',
     country = '',
     q = '',
+    brand = '',
     category = '',
     risk = '',
     sort = 'latest',
@@ -53,6 +54,8 @@ recallsRouter.get('/', async (req, res) => {
     !['', 'US', 'CA'].includes(country) ||
     typeof q !== 'string' ||
     q.length > 120 ||
+    typeof brand !== 'string' ||
+    brand.length > 80 ||
     typeof category !== 'string' ||
     category.length > 160 ||
     !['', ...riskOptions.map((item) => item.value)].includes(risk) ||
@@ -79,6 +82,7 @@ recallsRouter.get('/', async (req, res) => {
         limit: Number(limit),
         country,
         q: q.trim(),
+        brand: brand.trim(),
         category: category.trim(),
         risk,
         sort,
