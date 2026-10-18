@@ -4,9 +4,12 @@
 
 **Project:** CS5610 Project 2  
 **Team:** Sheng Qin and Tian Yuan  
-**Deployed application:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
+**Deployed application:** [RecallGuard](https://cs560-p2-production.up.railway.app/)  
+**Demo video:** [YouTube](https://youtu.be/re9B-7c_GTQ)  
+**Presentation:** [Google Slides](https://docs.google.com/presentation/d/1ufp5M8hFYiZehxvBPbusM1RnFuYfpa3vkGh370FGLbY/edit?usp=sharing)  
+**Updated:** October 18, 2026
 
-> This document combines the team's original proposal with a read-only review of the deployed interface. The six user stories below reproduce the proposal wording. Interface observations describe visible pages and controls; they do not certify successful database writes or completion of every user story. Mockups are schematic reconstructions, not screenshots or original pre-implementation designs.
+> This document describes the implemented application and preserves the six user stories from the team's proposal. The wireframes summarize the current interface; they are not original pre-implementation designs.
 
 ## 1. Project Description
 
@@ -20,33 +23,36 @@ A possible match is a starting point for checking a product, rather than proof t
 
 ### Core experience
 
-| Area            | Purpose                                                              | Evidence and scope                                                                                                                                                                                                            |
-| --------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Home            | Introduce RecallGuard and offer three entry points.                  | Observed: My Products, Recall Explorer, and My Watchlist links.                                                                                                                                                               |
-| My Products     | Maintain an inventory, search/filter it, and check possible recalls. | Observed: empty inventory, Add product dialog, Search, Brand, Category, and Clear controls. Editing, deletion, and matching are proposal requirements; populated product behavior was not tested.                             |
-| Recall Explorer | Browse and narrow government recall records.                         | Observed: populated results; country, keyword, risk, category, brand/manufacturer, and updated-date controls; sorting, pagination, recall links, and Save to Watchlist buttons. Filter outcomes were not exhaustively tested. |
-| Recall Details  | Read a notice and reach its official source.                         | Observed on one CPSC notice: source, title, dates, official link, hazard, action instructions, description, consumer contact, product facts, images, and Save to Watchlist. Available fields may vary by source or record.    |
-| My Watchlist    | Revisit saved recalls and track follow-up.                           | Observed: empty state, Recall Explorer link, Refresh list, and browser-storage/expiry notice. Saving, status/notes updates, and removal are proposal requirements; populated-item controls and persistence were not tested.   |
+| Area            | Purpose                                             | Main interactions                                                                                                                        |
+| --------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Home            | Introduce RecallGuard and offer three entry points. | Open My Products, Recall Explorer, or My Watchlist.                                                                                      |
+| My Products     | Maintain an inventory and check possible recalls.   | Add, edit, delete, search, filter, and paginate products; open possible recall matches.                                                  |
+| Recall Explorer | Browse shared government recall records.            | Search, combine filters, sort, paginate, open details, and save recalls.                                                                 |
+| Recall Details  | Read a notice and reach its official source.        | Review identifying information, hazard and remedy text, save a notice, and zoom or drag product images. Available fields vary by record. |
+| My Watchlist    | Track follow-up on saved recalls.                   | Update status and notes, remove entries, and browse 20 entries per page.                                                                 |
 
 ### Technology and data design
 
-The HTML5, CSS3, Vanilla JavaScript with ES6 modules, and the Fetch API on the frontend; Node.js and Express on the backend; and MongoDB through the native Node.js driver. The deployed site is hosted at a Railway URL. Backend source code, driver use, collection schemas, and deployment configuration were not independently inspected for this document.
+The frontend uses HTML5, CSS3, Vanilla JavaScript with ES6 modules, and the Fetch API. A single Node.js and Express application serves the static pages and API routes. Database modules use the native MongoDB driver. The application and its MongoDB service are hosted on Railway.
 
-The proposed data model separates two writable feature collections from shared recall reference data:
+| Collection  | Stored data and operations                                                                                                           | Responsibility           |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
+| `products`  | Product name, brand, model, category, and country, with browser ownership and timestamps. Supports create, read, update, and delete. | Sheng Qin                |
+| `watchlist` | Recall source/ID, a saved title, follow-up status, notes, ownership, and timestamps. Supports create, read, update, and delete.      | Tian Yuan                |
+| `recalls`   | Shared, read-only government records using the same fields for U.S. and Canadian notices.                                            | Shared reference dataset |
+| `users`     | Browser identity and activity/expiry dates.                                                                                          | Shared infrastructure    |
 
-| Data area                 | Intended role                                                                                                 | Responsibility           |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| Products                  | User-managed owned-product records; supports product CRUD, searching/filtering, and possible recall matching. | Sheng Qin                |
-| Recall watchlist          | Saved recall references with follow-up status and notes; supports watchlist CRUD.                             | Tian Yuan                |
-| Government recall records | Shared, read-only reference data imported into MongoDB from sources such as U.S. CPSC and Health Canada.      | Shared reference dataset |
+Each member's feature includes a frontend module, Express routes, and database operations. Product CRUD does not depend on the watchlist, and watchlist CRUD does not depend on products. Both read the shared recall dataset without editing it. The watchlist has a unique index on `(userId, source, sourceId)` so saving the same notice again does not create a duplicate.
 
-These are conceptual data areas from the proposal, not a verified database schema. Each member owns their feature across frontend, Express routes, and database operations. Product and watchlist CRUD are designed to remain independent; neither feature edits the government reference records.
-
-The deployed explorer displays records labeled United States/U.S. CPSC and Canada/Health Canada. No automatic import schedule, real-time synchronization, complete source coverage, or freshness guarantee was verified.
+The imported dataset contains 15,262 notices: 10,047 from U.S. CPSC and 5,215 from Health Canada. It is a fixed snapshot, not a live feed. Some source fields are missing, and notices from the two countries about the same product remain separate. See [Recall data](../data/README.md) for the schema and source limitations.
 
 ### Access and boundaries
 
-The watchlist page states: “Your list belongs to this browser.” It also states that clearing browser storage loses access and records expire after one year of inactivity. This is a user-facing access limitation; it does not establish where the records themselves are stored. Cross-device synchronization, accounts, email/push alerts, and automatic safety determinations are outside the functionality evidenced in this review.
+No login is required. The browser generates a random UUID and stores it as `recallguard.userId` in localStorage. Requests identify the browser with the `X-User-Id` header. Products and watchlist entries are stored in MongoDB under that ID; the lists themselves are not stored in localStorage.
+
+Clearing browser storage loses access to the previous identity. Its database records remain until they expire or are otherwise removed. Activity renews the identity's active personal records for 365 days. TTL indexes remove expired users, products, and watchlist entries, and application queries exclude expired personal records while deletion is pending.
+
+This is a demo identity mechanism, not secure authentication. Cross-device accounts, email/push alerts, and automatic safety determinations are outside the project scope.
 
 ## 2. User Personas
 
@@ -66,7 +72,7 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 **Scenario:** Norman records a household appliance using its name, brand, model, and category. Later, he finds it in My Products and checks possible recall matches before comparing the official notice with the product label.
 
-**Design implications:** Keep inventory maintenance separate from browsing all recalls. Use a focused product form, persistent search/filter controls, and clear language about possible matches. The observed form explains that brand and model help narrow recall searches.
+**Design implications:** Keep inventory maintenance separate from browsing all recalls. Use a focused product form, persistent search/filter controls, and clear language about possible matches. The product form explains that brand and model help narrow recall searches.
 
 ### Sarah — Safety-Conscious Consumer
 
@@ -80,7 +86,7 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 **Pain points:** Repeating searches makes notices hard to revisit, and reading a notice does not capture whether she has contacted a manufacturer or completed a remedy.
 
-**Scenario:** Sarah narrows Recall Explorer to relevant records, opens a notice, and reads the official instructions. She saves the notice, then uses her watchlist to track follow-up as described in the proposal.
+**Scenario:** Sarah narrows Recall Explorer to relevant records, opens a notice, and reads the official instructions. She saves the notice, then updates her watchlist notes and status as she takes action.
 
 **Design implications:** Present searchable recall metadata in a scannable table, give notices a dedicated details page, and make saving available near the record. Explain the watchlist's browser-specific access and inactivity expiry before users rely on it.
 
@@ -94,7 +100,7 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 **Intended flow:** Open My Products → add a product → review the inventory → edit inaccurate information or delete an unneeded record.
 
-**Design criteria:** The form captures product identity; successful changes should appear in the inventory. The observed Add product dialog contains Country (All, United States, Canada), Product name, Brand, Model, Category, Cancel, and Save product. Edit/delete controls and successful writes were not verified.
+**Design criteria:** The Add/Edit product dialog contains Country (All, United States, Canada), Product name, Brand, Model, and Category. Only the product name is required. Saving creates or updates the MongoDB record, and deleting removes only the current browser identity's product.
 
 #### N2. Find products
 
@@ -102,7 +108,7 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 **Intended flow:** Enter a search term and/or select brand/category → inspect the narrowed inventory → clear filters to return to the full list.
 
-**Design criteria:** Keep Search, Brand, Category, and Clear visible together. Show the product count and a meaningful empty state. These controls and the empty inventory were observed; results for populated products were not tested.
+**Design criteria:** Keep Search, Brand, Category, and Clear visible together. Search covers name, brand, model, and category; dropdowns filter by exact brand/category. The list shows a total count and 20 products per page, newest added first. Empty results explain the next step.
 
 #### N3. Check possible recall matches
 
@@ -110,7 +116,7 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 **Intended flow:** Locate an owned product → request possible recall matches → inspect relevant notices → verify identifying details against the official source.
 
-**Design criteria:** Preserve the distinction between a possible match and a confirmed affected product. The exact matching algorithm, match interface, and match accuracy were not verified; this remains a proposal requirement in this document.
+**Design criteria:** Use product-name keywords as the main query, with country restricting results when selected. Rank records matching the additional brand/model terms before product-name-only results so missing or inaccurate brand data does not hide all possible matches. Brand matching also searches consumer contact text. The Possible recalls dialog includes its own search field and pagination. Results are possible matches, not confirmed affected units; users must compare the official notice with their product.
 
 ### Tian Yuan — Recall Watchlist
 
@@ -128,7 +134,7 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 **Intended flow:** Find a recall in Explorer or Details → choose Save to Watchlist → revisit it in My Watchlist using the same browser.
 
-**Design criteria:** Offer saving at both discovery and detail stages, and explain where saved notices can be found. Both Save to Watchlist entry points were observed. No save request was submitted during this review.
+**Design criteria:** Offer Save to Watchlist in both Explorer and Details. Store the selected recall with an initial Reviewing status and empty notes. Repeated saves return the existing entry for that browser/source pair.
 
 #### S3. Track action and remove saved recalls
 
@@ -136,15 +142,13 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 **Intended flow:** Open a saved notice → record notes and update status → revisit progress → remove the saved item when appropriate.
 
-**Design criteria:** Associate follow-up information with the saved recall while leaving the source notice unchanged. The status examples come from the proposal; exact deployed options, editing controls, removal behavior, and persistence were not inspected because the reviewed watchlist was empty.
+**Design criteria:** Each saved recall has a status selector (Reviewing, Contacted Manufacturer, or Resolved), notes, Save changes, and Remove. Removal requires confirmation. The list uses server-side pagination with 20 entries per page and returns to a valid page after deletion. Changing pages or refreshing the list prompts before discarding unsaved edits. Opening a notice and returning preserves the page number.
 
 ## 4. Design Mockups
 
 ### Reading these mockups
 
-The wireframes below are drawn directly in Markdown using monospaced text blocks and reconstructed from the deployed pages. They use the site's restrained white/gray appearance, simple navigation, grouped forms, and text-led content hierarchy. Spacing, sample rows, and abbreviated content are schematic. They should not be presented as pixel-perfect screenshots or as evidence that an operation succeeded.
-
-The main page wireframes reflect observed page structure. The watchlist's separate region describes proposal requirements whose populated layout was not observed. No unverified product-card or recall-match layout is invented.
+The six wireframes below summarize the page structure and main controls using monospaced text. Spacing, sample content, and abbreviated text are schematic. The Home and inner pages share the logo and footer; only the inner pages show the three-tab navigation. The Watchlist mockup includes both empty and populated states.
 
 ### 4.1 Home
 
@@ -190,8 +194,8 @@ The main page wireframes reflect observed page structure. The watchlist's separa
 
 **Route:** `/products.html`  
 **Hierarchy:** Shared navigation → introductory instruction and Add product → search/brand/category controls → product count and newest-added ordering → inventory/empty state.  
-**Observed empty state:** “Your product list is empty,” followed by guidance to choose Add product.  
-**Stories supported:** N1 and N2; N3 is a planned inventory workflow whose populated interface was not reviewed.
+**Empty state:** “Your product list is empty,” followed by guidance to choose Add product.  
+**Stories supported:** N1 and N2; Check recalls opens the matching workflow for N3.
 
 ### 4.3 Add Product — dialog
 
@@ -214,7 +218,7 @@ The main page wireframes reflect observed page structure. The watchlist's separa
 
 **Entry:** Add product on My Products.  
 **Hierarchy:** Dialog title and close control → identification guidance → country → product name, brand, model, category → Cancel and Save product.  
-**Design rationale:** Brand and model provide context for narrowing recall searches. The dialog was opened and closed without submitting a record. Required-field rules and validation behavior were not tested.  
+**Design rationale:** Use the name on the product or packaging. Optional brand and model fields help rank possible recall matches. The same dialog is reused for editing, with existing values filled in. Country can be left as All or restricted to the United States or Canada.  
 **Story supported:** N1.
 
 ### 4.4 Recall Explorer — advanced filters expanded
@@ -275,12 +279,12 @@ The main page wireframes reflect observed page structure. The watchlist's separa
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-**Route pattern observed:** `/recall.html?source=cpsc&id=11020&return=`  
+**Route pattern:** `/recall.html?source=cpsc&id=11020&return=`  
 **Hierarchy:** Back to recalls → source/country and notice title → Save to Watchlist, dates, and official-source link → Hazard, What to do, Description, Consumer contact → Product information → Product images.  
-**Design rationale:** Place the hazard and response instructions near the top of the reading flow, with identifying facts and images available for comparison. Source records can omit fields: the reviewed example displayed “Not provided” for manufacturer.  
+**Design rationale:** Place the hazard and response instructions near the top of the reading flow, with identifying facts and images available for comparison. Source records can omit fields. The page indicates missing information and links to the official notice. Clicking an image opens a larger viewer with wheel zoom, drag, zoom buttons, Reset, and Escape to close.  
 **Stories supported:** S1 and S2; official notice review also supports the intent of N3.
 
-### 4.6 My Watchlist — empty state and proposal intent
+### 4.6 My Watchlist — empty and saved states
 
 ```text
 ┌──────────────────────────────────────────────────────────────────┐
@@ -299,18 +303,20 @@ The main page wireframes reflect observed page structure. The watchlist's separa
 │ [ Refresh list ]                                                 │
 └──────────────────────────────────────────────────────────────────┘
 
-Proposal-only saved-item concept (populated layout not verified):
+Saved-item state:
 ┌──────────────────────────────────────────────────────────────────┐
 │ Saved recall → open notice                                       │
 │ Status: Reviewing / Contacted Manufacturer / Resolved             │
-│ Notes: follow-up information                                     │
-│ Update notes/status · Remove saved recall                        │
+│ Notes [______________________________________________________]   │
+│ [ Save changes ]  [ Remove ]                                     │
+│ ...                                                              │
+│ 21–40 of 41      [ Previous ]  Page 2 of 3  [ Next ]               │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
 **Route:** `/watchlist.html`  
-**Observed hierarchy:** Shared navigation → My Watchlist heading → instructions and Recall Explorer link → browser-access/expiry notice → empty-state message and Refresh list.  
-**Proposal intent:** Saved recalls should support notes, status changes, and removal. The lower wireframe region records that intent without claiming to reproduce deployed populated controls.  
+**Hierarchy:** Shared navigation → My Watchlist heading → instructions and Recall Explorer link → browser-access/expiry notice → count or empty-state message → saved recall forms → pagination. Refresh list reloads the current page.  
+**Behavior:** Saving updates the entry in MongoDB. Remove opens a confirmation dialog. Pagination shows the entry range, current page, and Previous/Next controls when there is more than one page.  
 **Stories supported:** S2 and S3.
 
 ### Navigation and task flows
@@ -318,17 +324,18 @@ Proposal-only saved-item concept (populated layout not verified):
 ```text
 Home
 ├── My Products
-│   ├── Add product dialog                     [observed]
-│   ├── Search / Brand / Category              [controls observed]
-│   └── Edit / Delete / Possible recall check  [proposal; not tested]
+│   ├── Add / Edit / Delete product
+│   ├── Search / Brand / Category / Pagination
+│   └── Check recalls → Search possible matches → Recall Details
 ├── Recall Explorer
-│   ├── Search / filters / sort / pagination   [controls and records observed]
-│   └── Recall Details                        [opened and inspected]
-│       ├── Official notice link              [observed]
-│       └── Save to Watchlist                 [control observed]
+│   ├── Search / Filters / Sort / Pagination
+│   └── Recall Details
+│       ├── Official notice / Image viewer
+│       └── Save to Watchlist
 └── My Watchlist
-    ├── Empty state / Refresh list             [observed]
-    └── Notes / Status / Remove                [proposal; not tested]
+    ├── Empty state / Refresh list
+    ├── Notes / Status / Save changes / Remove
+    └── Pagination → Recall Details → Return to the same page
 ```
 
 ### Interaction and usability principles
@@ -340,14 +347,17 @@ Home
 - **Keep provenance visible:** Recall Details links back to the official notice and identifies the source.
 - **Explain access limitations:** The watchlist explicitly describes browser access and expiry.
 
-Responsive layouts, keyboard completeness, screen-reader behavior, error handling, and form validation were not audited. They are not asserted as verified properties of the deployment.
+Forms and dialogs use standard HTML controls. The Watchlist layout fits a 320-pixel viewport, and the API validates submitted fields and returns readable errors.
 
-## 5. Sources and Verification Notes
+## 5. Project Materials
 
-1. **Deployed interface:** [Home](https://cs560-p2-production.up.railway.app/), [My Products](https://cs560-p2-production.up.railway.app/products.html), [Recall Explorer](https://cs560-p2-production.up.railway.app/recalls.html), and [My Watchlist](https://cs560-p2-production.up.railway.app/watchlist.html), reviewed October 17, 2026.
-2. **Representative detail page:** [Van Rysel GRVL AF Bicycles](https://cs560-p2-production.up.railway.app/recall.html?source=cpsc&id=11020&return=), used to inspect notice structure and source-link placement.
+- [Demo video](https://youtu.be/re9B-7c_GTQ)
+- [Presentation slides](https://docs.google.com/presentation/d/1ufp5M8hFYiZehxvBPbusM1RnFuYfpa3vkGh370FGLbY/edit?usp=sharing)
+- [Live application](https://cs560-p2-production.up.railway.app/)
+- [Source code](https://github.com/infiniwire/CS560-P2)
+- [Recall dataset and field definitions](../data/README.md)
 
-The review opened pages, expanded advanced filters, and opened/closed the Add product dialog. It did not create, update, or delete products or watchlist entries. No claim is made about successful CRUD persistence, matching accuracy, authenticated ownership, database record count, or automatic data refresh. The explorer showed a populated result count, but that display alone is not a database audit.
+This document was updated on October 18, 2026 to reflect the current source code and interface.
 
 ## Document Format
 

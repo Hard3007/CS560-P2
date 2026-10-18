@@ -5,7 +5,9 @@ Track products you own and check for safety recalls.
 **Authors:** Sheng Qin and Tian Yuan  
 **Course:** [CS5610 Web Development, Fall 2026](https://johnguerra.co/classes/webDevelopment_online_fall_2026/)  
 **Repository:** [GitHub](https://github.com/infiniwire/CS560-P2)  
-**Live Website:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
+**Live Website:** [RecallGuard](https://cs560-p2-production.up.railway.app/)  
+**Demo Video:** [Watch on YouTube](https://youtu.be/re9B-7c_GTQ)  
+**Presentation:** [Google Slides](https://docs.google.com/presentation/d/1ufp5M8hFYiZehxvBPbusM1RnFuYfpa3vkGh370FGLbY/edit?usp=sharing)
 
 ## Project Overview
 
@@ -20,12 +22,14 @@ The application integrates public recall data from the U.S. Consumer Product Saf
 - Add, edit, and delete personal products.
 - Search and filter products by brand and category.
 - Find potential recall matches for owned products.
+- Browse 20 products per page and 10 possible recall matches per page.
 
 ### Recall Explorer
 
 - Browse and search government recall records.
 - Filter by country, keyword, category, risk, and date.
 - View detailed recall information.
+- Open product images in a larger viewer with zoom and drag controls.
 
 ### My Watchlist
 
@@ -34,6 +38,16 @@ The application integrates public recall data from the U.S. Consumer Product Saf
 - Add and edit personal notes.
 - Remove recalls from the watchlist.
 - Browse saved recalls in pages of 20, newest saved first.
+
+## How to Use
+
+1. Open My Products and add a product using the name on its packaging. Brand, model, category, and country are optional. Use Check recalls to find possible matches, then open the official notice to confirm whether your product is affected.
+2. Open Recall Explorer to search public notices. Choose a country or risk, or use More filters for category, brand/manufacturer, and updated dates. Select a notice to read its details or save it to your watchlist.
+3. Open My Watchlist to update a saved recall's status and notes. Select Save changes to keep your edits, or Remove when you no longer need the entry.
+
+No login is required. The browser stores a random user ID in localStorage; products and saved recalls are stored in MongoDB under that ID. Clearing browser storage loses access to the previous list. Personal records expire after 365 days without a request from that browser identity. MongoDB removes expired records through TTL indexes, and the application excludes expired records from reads.
+
+This browser ID is a simple way to separate demo users, not a secure authentication system. The imported recall dataset is a fixed snapshot and does not update automatically.
 
 ## Tech Stack
 
@@ -98,8 +112,9 @@ To check code quality:
 
 ```bash
 npm run check
-npm run format
 ```
+
+Use `npm run format` to apply Prettier formatting.
 
 ## Database
 
@@ -117,7 +132,6 @@ The application supports CRUD operations on products and watchlist records.
 ## Documentation
 
 - [Design Document](docs/DESIGN.md)
-- [Testing Documentation](docs/TESTING.md)
 - [Recall Dataset Documentation](data/README.md)
 
 ## Team Responsibilities
