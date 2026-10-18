@@ -4,120 +4,138 @@ Track products you own and check for safety recalls.
 
 **Authors:** Sheng Qin and Tian Yuan  
 **Course:** [CS5610 Web Development, Fall 2026](https://johnguerra.co/classes/webDevelopment_online_fall_2026/)  
-**Repository:** [infiniwire/CS560-P2](https://github.com/infiniwire/CS560-P2)
+**Repository:** [GitHub](https://github.com/infiniwire/CS560-P2)  
+**Live Website:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
 
-**Website:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
+## Project Overview
 
-## About
+RecallGuard is a web application that helps users track their products, search government safety recall records, and manage a personal recall watchlist.
 
-RecallGuard brings together recall records from the U.S. Consumer Product Safety Commission (CPSC) and Health Canada. Users will be able to keep a list of their products, look for possible recalls, and save notices to a watchlist.
+The application integrates public recall data from the U.S. Consumer Product Safety Commission (CPSC) and Health Canada, containing over 15,000 recall records.
 
-The project uses HTML, CSS, Vanilla JavaScript, Express, and MongoDB with the native Node.js driver. My Products lets users add, edit, delete and filter their products, then check for possible recall matches. Recall Explorer lists the imported notices with country, keyword, category, and risk filters. Each row opens the full recall details. My Watchlist saves notices and supports editing status and notes and removing entries.
+## Features
 
-The initial data import contains 15,262 notices: 10,047 from CPSC and 5,215 from Health Canada. They are stored in `recallguard.recalls` using the same 22-field structure. See [recall data](data/README.md) for the fields and source details.
+### My Products
+- Add, edit, and delete personal products.
+- Search and filter products by brand and category.
+- Find potential recall matches for owned products.
 
-## Run locally
+### Recall Explorer
+- Browse and search government recall records.
+- Filter by country, keyword, category, risk, and date.
+- View detailed recall information.
 
-Requires Node.js 22.13 or newer and npm.
+### My Watchlist
+- Save important recalls to a personal watchlist.
+- Update recall status: Reviewing, Contacted Manufacturer, or Resolved.
+- Add and edit personal notes.
+- Remove recalls from the watchlist.
 
-```sh
+## Tech Stack
+
+| Layer | Technologies |
+|-------|-------------|
+| Frontend | HTML5, CSS3, Vanilla JavaScript (ES6) |
+| Backend | Node.js, Express.js |
+| Database | MongoDB (Native Driver) |
+| Deployment | Railway |
+| Data Sources | CPSC, Health Canada |
+
+## Screenshots
+
+### Home Page
+![Home Page](screenshots/home.png)
+
+### My Products
+![My Products](screenshots/products.png)
+
+### Recall Explorer
+![Recall Explorer](screenshots/recalls.png)
+
+### My Watchlist
+![My Watchlist](screenshots/watchlist.png)
+
+## Installation
+
+**Requirements:** Node.js 22.13+ and npm.
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/infiniwire/CS560-P2.git
+cd CS560-P2
+```
+
+2. Install dependencies:
+
+```bash
 npm ci
 ```
 
-Copy `.env.example` to `.env`. Set `MONGODB_PUBLIC_URI` to the `MONGO_PUBLIC_URL` from the Railway MongoDB service, then start the server:
+3. Configure environment variables:
 
-```sh
+Copy `.env.example` to `.env` and configure the MongoDB connection.
+
+4. Start the application:
+
+```bash
 npm run dev
 ```
 
-Open <http://localhost:4173>. Use `npm start` to run without file watching.
+5. Open:
 
-Local development loads `.env` and uses `MONGODB_PUBLIC_URI`, falling back to `MONGODB_URI`. Without either setting, the page can run without a database connection. Use a separate development database for local work. Configure its URI rather than using production credentials.
+http://localhost:4173
 
-To check formatting and lint rules:
+To check code quality:
 
-```sh
+```bash
 npm run check
 npm run format
 ```
 
-## Browser identity
+## Database
 
-The app does not require a login. On the first visit, the browser generates a random UUID and saves it in `localStorage` as `recallguard.userId`. API requests made through the frontend API module include it in the `X-User-Id` header. The same browser keeps this ID across page navigation and reloads.
+RecallGuard uses MongoDB with the native Node.js driver.
 
-Products and watchlist records use this ID. The recall endpoints still return shared public data. This ID is not authentication. Clearing site data, using a different browser, or changing the site origin creates a separate identity; localhost and the deployed site do not share one. Product and watchlist content is stored in MongoDB.
+Main collections:
 
-Each page records a visit through `POST /api/user`. API requests carrying a valid `X-User-Id` update the user's `lastSeenAt` and renew the expiration of their products and watchlist for another 365 days. Health checks do not count as user activity.
+- `recalls`: Government recall records (15,262 records).
+- `products`: User-owned products.
+- `watchlist`: Saved recalls, statuses, and notes.
+- `users`: Browser-based user identities.
 
-MongoDB TTL indexes on `users`, `products`, and `watchlist` remove records after `expiresAt`. Cleanup runs in MongoDB even when the web server is stopped, with a short background-processing delay. Returning after expiration also removes expired personal records before renewing the ID. Shared `recalls` never expire under this policy. Product writes store `userId` and `expiresAt` from `req.user`; watchlist writes do the same. Clients cannot set their own expiration date.
+The application supports CRUD operations on products and watchlist records.
 
-## My Products
+## Documentation
 
-The homepage at `/` introduces RecallGuard and links to the three features. My Products is at `/products.html`, Recall Explorer at `/recalls.html`, and My Watchlist at `/watchlist.html`. Feature pages keep the navigation tabs; the RecallGuard logo returns to the homepage.
+- [Design Document](docs/DESIGN.md)
+- [Testing Documentation](docs/TESTING.md)
+- [Recall Dataset Documentation](data/README.md)
 
-Choose Add product, enter a product name, and optionally add a brand, model and category. Select the United States or Canada using the flags, or leave All selected to search both countries. Edit or delete a product using its row actions. Use the search field and brand/category filters to find an item in your list.
+## Team Responsibilities
 
-Check recalls searches the imported recall search text for the product name, within the saved country. Brand keywords are checked in both the recall search text and Consumer contact; model keywords are checked in the recall search text. Common words such as “the” and “and” are ignored. Notices that also contain the supplied brand and model keywords appear first, followed by the remaining product-name matches. Each group is ordered by its update date, newest first. Missing or incorrect brand/model information does not exclude product-name matches. The search field in Possible recalls narrows this list by another keyword or phrase in either the recall search text or Consumer contact; clearing it restores the full list. Results are possible matches, not a determination that a product is affected or safe. Open a result to check the full government notice, or use Recall Explorer for a broader search.
+**Sheng Qin — My Products & Recall Explorer**
+- Product CRUD operations
+- Product search and filtering
+- Recall matching
+- Frontend and backend implementation
 
-The product API requires `X-User-Id`. `GET /api/products` accepts `q`, `brand`, `category`, `page` and `limit`, and returns the current user's products and filter options. `POST /api/products` creates a product, `PUT /api/products/:id` edits it, and `DELETE /api/products/:id` removes it. The editable fields are `name` (required), `brand`, `model`, `category` and `country` (`US`, `CA`, or an empty string for both). Products without a country also search both countries. `GET /api/products/:id/recalls` returns paginated possible matches and accepts `q` to narrow them. Every product operation is scoped to the supplied browser ID.
+**Tian Yuan — Recall Explorer & Watchlist**
+- Recall browsing and advanced filtering
+- Watchlist CRUD operations
+- Status and notes management
+- Frontend and backend implementation
 
-## Recall API
-
-`GET /api/recalls` reads the imported records from MongoDB. It returns `items`, `total`, `page`, `limit`, and `totalPages`, sorted by the source update date, newest first.
-
-The default page size is 20; the maximum is 100. For example, open <http://localhost:4173/api/recalls?page=1&limit=20> to read the first page. Invalid pagination returns HTTP 400, and a database error returns HTTP 503.
-
-Frontend modules can import `fetchRecalls` from `/js/api.js` and call `fetchRecalls({ page: 1, limit: 20 })` to load a page of records.
-
-The list also accepts `country` (`US` or `CA`), `q` (keyword), `category`, `risk`, and `sort` (`latest` or `oldest`). Category matching accepts partial text. Risk filters and short labels match keywords in the official title, falling back to the hazard text when the title has no recognized risk.
-
-`updatedFrom` and `updatedTo` filter the source update date using `YYYY-MM-DD`. Both dates are included, and either end can be left blank. Category and the updated range are available under More filters in the Explorer.
-
-`GET /api/recalls/filters` returns the category and risk options. `GET /api/recalls/:source/:sourceId` returns a complete notice, or HTTP 404 if it does not exist. The Explorer table uses summary records; descriptions, instructions, contact information, and images appear on the detail page.
+Both members contributed to the shared application.
 
 ## Deployment
 
-Railway deploys the `main` branch using the Dockerfile. The server listens on Railway's `PORT`, and `/health` is the deployment health check.
+The application is deployed on Railway.
 
-The production environment uses these variables:
+**Live Website:** https://cs560-p2-production.up.railway.app/
 
-```text
-NODE_ENV=production
-MONGODB_URI=${{MongoDB.MONGO_URL}}
-MONGODB_DB=recallguard
-```
-
-Production uses `MONGODB_URI` over Railway's private network and requires a working database connection at startup. `/health` and `/api/health` check the connection and return HTTP 503 if it fails.
-
-Keep database credentials in `.env` locally and Railway variables in production. `.env` is excluded from Git.
-
-## Team responsibilities
-
-- Sheng Qin: My Products, product CRUD, search and filtering, and recall matching.
-- Tian Yuan: Recall Explorer and My Watchlist, recall search, saved recalls, notes, and status updates.
-- Shared: recall data, database connection, and page styles.
+Database credentials are stored securely in environment variables and are not committed to GitHub.
 
 ## License
 
-[MIT](LICENSE). The third-party font and university mark have separate terms.
-
-## Tian Yuan: Recall Watchlist
-
-Use Recall Explorer to search product names or keywords, filter by brand/manufacturer, category, risk, country or update date, and change the sort order. Filters are combined and recorded in the URL. Brand/manufacturer searches also include search text and consumer contact because the imported structured brands are empty (see data/README.md). No missing brand is inferred.
-
-Choose **Save to Watchlist** on a result or its detail page. Repeated saves keep the existing status and notes. Open **My Watchlist**, select Reviewing, Contacted Manufacturer, or Resolved, enter up to 2000 characters of notes and choose **Save changes**. **Remove** asks for confirmation. Refreshing or reopening the same browser preserves saved data in MongoDB.
-
-| Method | Endpoint           | Result                                                 |
-| ------ | ------------------ | ------------------------------------------------------ |
-| GET    | /api/watchlist     | Current browser's saved items                          |
-| POST   | /api/watchlist     | Save `{source, sourceId}`; repeat saves are idempotent |
-| PATCH  | /api/watchlist/:id | Update status and/or notes                             |
-| DELETE | /api/watchlist/:id | Remove an owned item; 204 on success                   |
-
-All watchlist endpoints require X-User-Id and return JSON errors for invalid input (400), missing records (404), unavailable database (503), or oversized bodies (413). A unique MongoDB index on userId/source/sourceId prevents concurrent duplicate saves. Shared recall records remain read-only. Browser UUIDs isolate records but are not secure authentication: anyone with the ID can access those records. Do not put sensitive personal information in notes.
-
-Run `npm test` for HTTP contract tests with an isolated fake repository and recall query tests, and `npm run check` for lint and formatting. These tests do not replace MongoDB/deployed browser checks. See docs/TESTING.md and docs/DESIGN.md.
-
-## Credentials
-
-Previously shared screenshots exposed MongoDB credentials. Rotate the password in the database service and update the application's environment variables. Never commit `.env`; only `.env.example` is included. No real connection credentials are needed for the automated tests.
+This project is licensed under the [MIT License](LICENSE).
