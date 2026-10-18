@@ -181,6 +181,73 @@
   display: none;
 }
 
+.watchlist-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid #d7dedb;
+  font-size: 13px;
+  color: #626b74;
+}
+
+.watchlist-pagination[hidden] {
+  display: none;
+}
+
+.watchlist-pagination p {
+  margin: 0;
+}
+
+.watchlist-page-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.watchlist-page-controls button {
+  min-height: 44px;
+  padding-inline: 12px;
+  border-radius: 0;
+}
+
+#watchlist-page-number {
+  white-space: nowrap;
+}
+
+.watchlist-confirm {
+  width: min(480px, calc(100% - 40px));
+  max-height: calc(100svh - 40px);
+  padding: 24px;
+  border: 1px solid #d7dedb;
+  border-radius: 0;
+  color: #252b30;
+}
+
+.watchlist-confirm::backdrop {
+  background: #0006;
+}
+
+.watchlist-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.watchlist-confirm-actions button {
+  min-height: 44px;
+  border-radius: 0;
+}
+
+#watchlist-confirm-accept {
+  border-color: #274d3e;
+  background: #274d3e;
+  color: #fff;
+}
+
 @media (max-width: 600px) {
   .watchlist {
     padding: 28px 18px 40px;
@@ -194,6 +261,15 @@
   }
   .watchlist select {
     max-width: none;
+  }
+  .watchlist-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .watchlist-page-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
   }
 }
 

@@ -4,12 +4,21 @@ import express from 'express';
 import { createWatchlistRouter } from '../server/routes/watchlist.js';
 import { recallFilter } from '../server/db/recalls.js';
 
-test('watchlist HTTP CRUD, duplicates, validation and owner isolation', async () => {
+test('watchlist HTTP CRUD, pagination, validation and owner isolation', async () => {
   const items = new Map();
   const id = '0123456789abcdef01234567';
   const repository = {
-    async readWatchlist(userId) {
-      return [...items.values()].filter((item) => item.userId === userId);
+    async readWatchlist(userId, { page, limit }) {
+      const records = [...items.values()].filter(
+        (item) => item.userId === userId,
+      );
+      return {
+        items: records.slice((page - 1) * limit, page * limit),
+        total: records.length,
+        page,
+        limit,
+        totalPages: Math.ceil(records.length / limit),
+      };
     },
     async saveRecall(user, recall) {
       if (!items.has(user.userId))
@@ -122,6 +131,35 @@ test('watchlist HTTP CRUD, duplicates, validation and owner isolation', async ()
     assert.equal((await request(`/${id}`, 'DELETE')).status, 204);
     assert.equal((await request(`/${id}`, 'DELETE')).status, 404);
     assert.deepEqual((await request()).body.items, []);
+    for (let index = 0; index < 45; index++)
+      items.set('paged-' + index, { _id: String(index), userId: 'alice' });
+    const first = await request();
+    assert.equal(first.body.total, 45);
+    assert.equal(first.body.limit, 20);
+    assert.equal(first.body.totalPages, 3);
+    assert.equal(first.body.items.length, 20);
+    const second = await request('?page=2&limit=20');
+    assert.equal(second.body.page, 2);
+    assert.equal(second.body.items.length, 20);
+    assert.equal(second.body.items[0]._id, '20');
+    const last = await request('?page=3&limit=20');
+    assert.equal(last.body.items.length, 5);
+    assert.equal(last.body.items[0]._id, '40');
+    assert.deepEqual((await request('?page=4')).body.items, []);
+    assert.equal((await request('', 'GET', undefined, 'bob')).body.total, 0);
+    for (const query of [
+      '?page=0',
+      '?page=-1',
+      '?page=1.5',
+      '?page=1&page=2',
+      '?limit=0',
+      '?limit=101',
+      '?limit=20&limit=10',
+      '?page=9007199254740991&limit=100',
+      '?userId=bob',
+    ])
+      assert.equal((await request(query)).status, 400, query);
+    items.clear();
     repository.readWatchlist = async () => {
       throw new Error('secret should not leak');
     };

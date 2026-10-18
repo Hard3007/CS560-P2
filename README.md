@@ -33,6 +33,7 @@ The application integrates public recall data from the U.S. Consumer Product Saf
 - Update recall status: Reviewing, Contacted Manufacturer, or Resolved.
 - Add and edit personal notes.
 - Remove recalls from the watchlist.
+- Browse saved recalls in pages of 20, newest saved first.
 
 ## Tech Stack
 

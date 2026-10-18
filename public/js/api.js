@@ -88,7 +88,10 @@ export function fetchProductRecalls(id, { page = 1, q = '', signal } = {}) {
   );
 }
 
-export const fetchWatchlist = () => fetchJson('/api/watchlist');
+export function fetchWatchlist({ page = 1, limit = 20, signal } = {}) {
+  const query = new URLSearchParams({ page, limit });
+  return fetchJson(`/api/watchlist?${query}`, signal);
+}
 export const saveRecall = (source, sourceId) =>
   fetchJson('/api/watchlist', undefined, {
     method: 'POST',

@@ -27,7 +27,7 @@
       </nav>
     </header>
     <main class="page-content watchlist">
-      <h1>My Watchlist</h1>
+      <h1 id="watchlist-title" tabindex="-1">My Watchlist</h1>
       <p>
         Save recalls in <a href="/recalls.html">Recall Explorer</a>, then track
         your next steps here. Open the notice to verify the product and follow
@@ -44,6 +44,36 @@
         aria-label="Saved recalls"
         aria-busy="true"
       ></section>
+      <nav
+        id="watchlist-pagination"
+        class="watchlist-pagination"
+        aria-label="Watchlist pages"
+        hidden
+      >
+        <p id="watchlist-page-summary"></p>
+        <div class="watchlist-page-controls">
+          <button id="watchlist-previous" type="button" disabled>
+            ← Previous
+          </button>
+          <span id="watchlist-page-number"></span>
+          <button id="watchlist-next" type="button" disabled>Next →</button>
+        </div>
+      </nav>
+      <dialog
+        id="watchlist-confirm"
+        class="watchlist-confirm"
+        aria-labelledby="watchlist-confirm-title"
+        aria-describedby="watchlist-confirm-message"
+      >
+        <h2 id="watchlist-confirm-title"></h2>
+        <p id="watchlist-confirm-message"></p>
+        <div class="watchlist-confirm-actions">
+          <button id="watchlist-confirm-cancel" type="button" autofocus>
+            Cancel
+          </button>
+          <button id="watchlist-confirm-accept" type="button">Continue</button>
+        </div>
+      </dialog>
       <noscript>Enable JavaScript to manage your watchlist.</noscript>
     </main>
     <footer class="site-footer">

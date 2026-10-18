@@ -2,15 +2,28 @@ import { ObjectId } from 'mongodb';
 import { getDatabase } from './connection.js';
 const projection = { userId: 0, expiresAt: 0 };
 const owned = (userId) => ({ userId, expiresAt: { $gt: new Date() } });
-export async function readWatchlist(userId) {
+export async function readWatchlist(userId, { page = 1, limit = 20 } = {}) {
   const database = getDatabase();
-  const items = await database
-    .collection('watchlist')
-    .find(owned(userId), { projection })
-    .sort({ createdAt: -1, _id: -1 })
-    .maxTimeMS(5000)
-    .toArray();
-  if (!items.length) return items;
+  const collection = database.collection('watchlist');
+  const filter = owned(userId);
+  const [items, total] = await Promise.all([
+    collection
+      .find(filter, { projection })
+      .sort({ createdAt: -1, _id: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .maxTimeMS(5000)
+      .toArray(),
+    collection.countDocuments(filter, { maxTimeMS: 5000 }),
+  ]);
+  const result = {
+    items,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+  };
+  if (!items.length) return result;
   // Resolve product names from shared recalls, including previously saved entries.
   const recalls = await database
     .collection('recalls')
@@ -27,10 +40,11 @@ export async function readWatchlist(userId) {
         recall.title,
     ]),
   );
-  return items.map((item) => ({
+  result.items = items.map((item) => ({
     ...item,
     displayName: names.get(`${item.source}:${item.sourceId}`) || item.title,
   }));
+  return result;
 }
 export async function saveRecall(user, recall) {
   const key = {

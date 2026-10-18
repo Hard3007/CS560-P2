@@ -37,9 +37,28 @@ export function createWatchlistRouter(
       return res.status(400).json({ error: 'Invalid watchlist identifier.' });
     next();
   });
-  router.get('/', async (req, res) =>
-    res.json({ items: await repository.readWatchlist(req.user.userId) }),
-  );
+  router.get('/', async (req, res) => {
+    const { page = '1', limit = '20' } = req.query;
+    if (
+      Object.keys(req.query).some((key) => !['page', 'limit'].includes(key)) ||
+      typeof page !== 'string' ||
+      typeof limit !== 'string' ||
+      !/^[1-9]\d*$/.test(page) ||
+      !/^[1-9]\d*$/.test(limit) ||
+      !Number.isSafeInteger(Number(page) * Number(limit)) ||
+      Number(limit) > 100
+    )
+      return res.status(400).json({
+        error:
+          'page must be a positive integer; limit must be between 1 and 100.',
+      });
+    res.json(
+      await repository.readWatchlist(req.user.userId, {
+        page: Number(page),
+        limit: Number(limit),
+      }),
+    );
+  });
   router.post('/', async (req, res) => {
     const body = req.body;
     if (
