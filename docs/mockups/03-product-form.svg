@@ -1,0 +1,376 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1280"
+  height="860"
+  viewBox="0 0 1280 860"
+>
+  <title>Add / Edit Product wireframe</title>
+  <desc>RecallGuard interface structure. Example content is illustrative.</desc>
+  <rect width="1280" height="860" fill="#eeeeee" />
+  <text
+    x="30"
+    y="50.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    03 / ADD / EDIT PRODUCT
+  </text>
+  <rect
+    x="30"
+    y="88"
+    width="1220"
+    height="728"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="68"
+    y="133.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    RecallGuard
+  </text>
+  <text
+    x="68"
+    y="189.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="700"
+    text-anchor="start"
+  >
+    My Products
+  </text>
+  <line x1="68" y1="204" x2="180" y2="204" stroke="#252525" stroke-width="2" />
+  <text
+    x="212"
+    y="189.2"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Recall Explorer
+  </text>
+  <text
+    x="380"
+    y="189.2"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    My Watchlist
+  </text>
+  <line x1="30" y1="224" x2="1250" y2="224" stroke="#a7a7a7" stroke-width="1" />
+  <rect
+    x="31"
+    y="225"
+    width="1218"
+    height="544"
+    rx="0"
+    fill="#e9e9e9"
+    stroke="#e9e9e9"
+  />
+  <rect
+    x="332"
+    y="151"
+    width="616"
+    height="594"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="366"
+    y="206.1"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="29"
+    font-weight="700"
+    text-anchor="start"
+  >
+    Add product
+  </text>
+  <text
+    x="914"
+    y="206.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="28"
+    font-weight="400"
+    text-anchor="end"
+  >
+    ×
+  </text>
+  <text
+    x="366"
+    y="244.3"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="17"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Use the name on the product or packaging. Brand and model help
+  </text>
+  <text
+    x="366"
+    y="269.3"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="17"
+    font-weight="400"
+    text-anchor="start"
+  >
+    narrow recall searches.
+  </text>
+  <text
+    x="366"
+    y="314.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Country
+  </text>
+  <rect
+    x="366"
+    y="326"
+    width="54"
+    height="40"
+    rx="0"
+    fill="#252525"
+    stroke="#252525"
+  />
+  <text
+    x="393.0"
+    y="351.4"
+    fill="white"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    All
+  </text>
+  <rect
+    x="420"
+    y="326"
+    width="146"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="493.0"
+    y="351.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    United States
+  </text>
+  <rect
+    x="566"
+    y="326"
+    width="106"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="619.0"
+    y="351.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Canada
+  </text>
+  <text
+    x="366"
+    y="400.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Product name *
+  </text>
+  <rect
+    x="366"
+    y="412"
+    width="548"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="378"
+    y="438.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    e.g. Air fryer
+  </text>
+  <text
+    x="366"
+    y="492.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Brand
+  </text>
+  <rect
+    x="366"
+    y="504"
+    width="262"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="378"
+    y="530.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    e.g. Ninja
+  </text>
+  <text
+    x="652"
+    y="492.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Model
+  </text>
+  <rect
+    x="652"
+    y="504"
+    width="262"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="664"
+    y="530.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Model number, if known
+  </text>
+  <text
+    x="366"
+    y="584.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Category
+  </text>
+  <rect
+    x="366"
+    y="596"
+    width="548"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="378"
+    y="622.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Choose or enter a category
+  </text>
+  <line x1="889" y1="614" x2="894" y2="619" stroke="#252525" stroke-width="1" />
+  <line x1="894" y1="619" x2="899" y2="614" stroke="#252525" stroke-width="1" />
+  <line x1="366" y1="660" x2="914" y2="660" stroke="#a7a7a7" stroke-width="1" />
+  <rect
+    x="630"
+    y="682"
+    width="110"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="685.0"
+    y="707.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Cancel
+  </text>
+  <rect
+    x="758"
+    y="682"
+    width="156"
+    height="40"
+    rx="0"
+    fill="#252525"
+    stroke="#252525"
+  />
+  <text
+    x="836.0"
+    y="707.4"
+    fill="white"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Save product
+  </text>
+</svg>

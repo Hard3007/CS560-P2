@@ -1,0 +1,449 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1280"
+  height="860"
+  viewBox="0 0 1280 860"
+>
+  <title>Recall Details wireframe</title>
+  <desc>RecallGuard interface structure. Example content is illustrative.</desc>
+  <rect width="1280" height="860" fill="#eeeeee" />
+  <text
+    x="30"
+    y="50.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    06 / RECALL DETAILS
+  </text>
+  <rect
+    x="30"
+    y="88"
+    width="1220"
+    height="728"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="68"
+    y="133.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    RecallGuard
+  </text>
+  <text
+    x="68"
+    y="189.2"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    My Products
+  </text>
+  <text
+    x="212"
+    y="189.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="700"
+    text-anchor="start"
+  >
+    Recall Explorer
+  </text>
+  <line x1="212" y1="204" x2="347" y2="204" stroke="#252525" stroke-width="2" />
+  <text
+    x="380"
+    y="189.2"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    My Watchlist
+  </text>
+  <line x1="30" y1="224" x2="1250" y2="224" stroke="#a7a7a7" stroke-width="1" />
+  <text
+    x="68"
+    y="259.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    ← Back to recalls
+  </text>
+  <text
+    x="68"
+    y="293.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    UNITED STATES / U.S. CPSC
+  </text>
+  <text
+    x="68"
+    y="342.6"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="34"
+    font-weight="700"
+    text-anchor="start"
+  >
+    Recall title
+  </text>
+  <rect
+    x="1020"
+    y="302"
+    width="192"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="1116.0"
+    y="327.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Save to Watchlist
+  </text>
+  <text
+    x="68"
+    y="378.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Recall date · Last updated
+  </text>
+  <text
+    x="1212"
+    y="379.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="end"
+  >
+    Read the official notice ↗
+  </text>
+  <rect
+    x="68"
+    y="409"
+    width="728"
+    height="226"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="88"
+    y="446.9"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="21"
+    font-weight="700"
+    text-anchor="start"
+  >
+    Hazard
+  </text>
+  <text
+    x="88"
+    y="476.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Source hazard text describing the risk to the consumer.
+  </text>
+  <text
+    x="88"
+    y="525.9"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="21"
+    font-weight="700"
+    text-anchor="start"
+  >
+    What to do
+  </text>
+  <text
+    x="88"
+    y="556.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Official action or remedy instructions from the source notice.
+  </text>
+  <text
+    x="88"
+    y="603.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Description and consumer contact
+  </text>
+  <rect
+    x="820"
+    y="409"
+    width="392"
+    height="226"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="842"
+    y="446.9"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="21"
+    font-weight="700"
+    text-anchor="start"
+  >
+    Product information
+  </text>
+  <text
+    x="842"
+    y="485.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Product
+  </text>
+  <text
+    x="1188"
+    y="486.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="end"
+  >
+    Product name
+  </text>
+  <text
+    x="842"
+    y="521.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Category
+  </text>
+  <text
+    x="1188"
+    y="522.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="end"
+  >
+    Source category
+  </text>
+  <text
+    x="842"
+    y="557.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Manufacturer
+  </text>
+  <text
+    x="1188"
+    y="558.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="end"
+  >
+    If provided
+  </text>
+  <text
+    x="842"
+    y="593.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Recall number
+  </text>
+  <text
+    x="1188"
+    y="594.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="end"
+  >
+    Source identifier
+  </text>
+  <text
+    x="68"
+    y="676.0"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="20"
+    font-weight="700"
+    text-anchor="start"
+  >
+    Product images
+  </text>
+  <rect
+    x="68"
+    y="692"
+    width="228"
+    height="56"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <line x1="68" y1="692" x2="296" y2="748" stroke="#cccccc" stroke-width="1" />
+  <line x1="296" y1="692" x2="68" y2="748" stroke="#cccccc" stroke-width="1" />
+  <rect
+    x="107.0"
+    y="702.0"
+    width="150"
+    height="36"
+    rx="0"
+    fill="white"
+    stroke="white"
+  />
+  <text
+    x="182.0"
+    y="726.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Image
+  </text>
+  <rect
+    x="320"
+    y="692"
+    width="228"
+    height="56"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <line x1="320" y1="692" x2="548" y2="748" stroke="#cccccc" stroke-width="1" />
+  <line x1="548" y1="692" x2="320" y2="748" stroke="#cccccc" stroke-width="1" />
+  <rect
+    x="359.0"
+    y="702.0"
+    width="150"
+    height="36"
+    rx="0"
+    fill="white"
+    stroke="white"
+  />
+  <text
+    x="434.0"
+    y="726.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Image
+  </text>
+  <rect
+    x="572"
+    y="692"
+    width="228"
+    height="56"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <line x1="572" y1="692" x2="800" y2="748" stroke="#cccccc" stroke-width="1" />
+  <line x1="800" y1="692" x2="572" y2="748" stroke="#cccccc" stroke-width="1" />
+  <rect
+    x="611.0"
+    y="702.0"
+    width="150"
+    height="36"
+    rx="0"
+    fill="white"
+    stroke="white"
+  />
+  <text
+    x="686.0"
+    y="726.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Image
+  </text>
+  <text
+    x="835"
+    y="716.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Click an image to enlarge.
+  </text>
+  <text
+    x="835"
+    y="741.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Wheel to zoom · Drag to pan
+  </text>
+</svg>

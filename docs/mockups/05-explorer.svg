@@ -1,0 +1,699 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1280"
+  height="860"
+  viewBox="0 0 1280 860"
+>
+  <title>Recall Explorer wireframe</title>
+  <desc>RecallGuard interface structure. Example content is illustrative.</desc>
+  <rect width="1280" height="860" fill="#eeeeee" />
+  <text
+    x="30"
+    y="50.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    05 / RECALL EXPLORER
+  </text>
+  <rect
+    x="30"
+    y="88"
+    width="1220"
+    height="728"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="68"
+    y="133.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    RecallGuard
+  </text>
+  <text
+    x="68"
+    y="189.2"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    My Products
+  </text>
+  <text
+    x="212"
+    y="189.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="700"
+    text-anchor="start"
+  >
+    Recall Explorer
+  </text>
+  <line x1="212" y1="204" x2="347" y2="204" stroke="#252525" stroke-width="2" />
+  <text
+    x="380"
+    y="189.2"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    My Watchlist
+  </text>
+  <line x1="30" y1="224" x2="1250" y2="224" stroke="#a7a7a7" stroke-width="1" />
+  <text
+    x="68"
+    y="259.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Country
+  </text>
+  <rect
+    x="68"
+    y="271"
+    width="54"
+    height="40"
+    rx="0"
+    fill="#252525"
+    stroke="#252525"
+  />
+  <text
+    x="95.0"
+    y="296.4"
+    fill="white"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    All
+  </text>
+  <rect
+    x="122"
+    y="271"
+    width="146"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="195.0"
+    y="296.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    United States
+  </text>
+  <rect
+    x="268"
+    y="271"
+    width="106"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="321.0"
+    y="296.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Canada
+  </text>
+  <text
+    x="630"
+    y="259.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Search
+  </text>
+  <rect
+    x="630"
+    y="271"
+    width="160"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="642"
+    y="297.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    All risks
+  </text>
+  <line x1="765" y1="289" x2="770" y2="294" stroke="#252525" stroke-width="1" />
+  <line x1="770" y1="294" x2="775" y2="289" stroke="#252525" stroke-width="1" />
+  <rect
+    x="790"
+    y="271"
+    width="322"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="802"
+    y="297.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Product, brand or keyword
+  </text>
+  <rect
+    x="1112"
+    y="271"
+    width="100"
+    height="42"
+    rx="0"
+    fill="#252525"
+    stroke="#252525"
+  />
+  <text
+    x="1162.0"
+    y="297.4"
+    fill="white"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Search
+  </text>
+  <text
+    x="68"
+    y="350.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    More filters ↑
+  </text>
+  <text
+    x="1212"
+    y="350.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="end"
+  >
+    Clear filters
+  </text>
+  <rect
+    x="68"
+    y="374"
+    width="1144"
+    height="100"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="86"
+    y="400.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Category
+  </text>
+  <rect
+    x="86"
+    y="412"
+    width="260"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="98"
+    y="438.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    All categories
+  </text>
+  <line x1="321" y1="430" x2="326" y2="435" stroke="#252525" stroke-width="1" />
+  <line x1="326" y1="435" x2="331" y2="430" stroke="#252525" stroke-width="1" />
+  <text
+    x="366"
+    y="400.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Brand or manufacturer
+  </text>
+  <rect
+    x="366"
+    y="412"
+    width="306"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="378"
+    y="438.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Enter a name
+  </text>
+  <text
+    x="692"
+    y="400.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Updated from
+  </text>
+  <rect
+    x="692"
+    y="412"
+    width="238"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="704"
+    y="438.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    mm/dd/yyyy
+  </text>
+  <text
+    x="950"
+    y="400.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Updated to
+  </text>
+  <rect
+    x="950"
+    y="412"
+    width="244"
+    height="42"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="962"
+    y="438.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    mm/dd/yyyy
+  </text>
+  <text
+    x="68"
+    y="513.3"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="17"
+    font-weight="400"
+    text-anchor="start"
+  >
+    15,262 notices
+  </text>
+  <text
+    x="1212"
+    y="513.3"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="17"
+    font-weight="400"
+    text-anchor="end"
+  >
+    Newest ↓
+  </text>
+  <rect
+    x="68"
+    y="535"
+    width="1144"
+    height="40"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="82"
+    y="559.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Recall
+  </text>
+  <text
+    x="630"
+    y="559.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Country
+  </text>
+  <text
+    x="730"
+    y="559.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Category
+  </text>
+  <text
+    x="931"
+    y="559.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Risk
+  </text>
+  <text
+    x="1043"
+    y="559.6"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="14"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Updated
+  </text>
+  <text
+    x="82"
+    y="600.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Van Rysel GRVL AF Bicycles
+  </text>
+  <rect
+    x="82"
+    y="611"
+    width="152"
+    height="29"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="158.0"
+    y="630.9"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Save to Watchlist
+  </text>
+  <text
+    x="630"
+    y="609.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    US
+  </text>
+  <text
+    x="730"
+    y="609.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Bicycles
+  </text>
+  <text
+    x="931"
+    y="609.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Crash
+  </text>
+  <text
+    x="1043"
+    y="609.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Oct 8, 2026
+  </text>
+  <text
+    x="1180"
+    y="612.0"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="20"
+    font-weight="400"
+    text-anchor="start"
+  >
+    ↗
+  </text>
+  <line x1="68" y1="646" x2="1212" y2="646" stroke="#a7a7a7" stroke-width="1" />
+  <text
+    x="82"
+    y="664.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="18"
+    font-weight="400"
+    text-anchor="start"
+  >
+    LED-light bike lock keys
+  </text>
+  <rect
+    x="82"
+    y="675"
+    width="152"
+    height="29"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="158.0"
+    y="694.9"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Save to Watchlist
+  </text>
+  <text
+    x="630"
+    y="673.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    US
+  </text>
+  <text
+    x="730"
+    y="673.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Locks
+  </text>
+  <text
+    x="931"
+    y="673.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Ingestion
+  </text>
+  <text
+    x="1043"
+    y="673.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Oct 8, 2026
+  </text>
+  <text
+    x="1180"
+    y="676.0"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="20"
+    font-weight="400"
+    text-anchor="start"
+  >
+    ↗
+  </text>
+  <line x1="68" y1="710" x2="1212" y2="710" stroke="#a7a7a7" stroke-width="1" />
+  <text
+    x="68"
+    y="741.5"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="start"
+  >
+    1–20 of 15,262
+  </text>
+  <rect
+    x="856"
+    y="716"
+    width="110"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="911.0"
+    y="741.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Previous
+  </text>
+  <text
+    x="1042"
+    y="741.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="15"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Page 1 of 764
+  </text>
+  <rect
+    x="1122"
+    y="716"
+    width="90"
+    height="40"
+    rx="0"
+    fill="white"
+    stroke="#252525"
+  />
+  <text
+    x="1167.0"
+    y="741.4"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    Next
+  </text>
+</svg>

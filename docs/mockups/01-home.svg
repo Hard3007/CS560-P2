@@ -1,0 +1,245 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1280"
+  height="860"
+  viewBox="0 0 1280 860"
+>
+  <title>Home wireframe</title>
+  <desc>RecallGuard interface structure. Example content is illustrative.</desc>
+  <rect width="1280" height="860" fill="#eeeeee" />
+  <text
+    x="30"
+    y="50.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    01 / HOME
+  </text>
+  <rect
+    x="30"
+    y="88"
+    width="1220"
+    height="728"
+    rx="0"
+    fill="white"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="68"
+    y="133.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="25"
+    font-weight="700"
+    text-anchor="start"
+  >
+    RecallGuard
+  </text>
+  <text
+    x="168"
+    y="277.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="75"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Know what
+  </text>
+  <text
+    x="168"
+    y="362.5"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="75"
+    font-weight="400"
+    text-anchor="start"
+  >
+    you bring home.
+  </text>
+  <text
+    x="172"
+    y="415.1"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="19"
+    font-weight="400"
+    text-anchor="start"
+  >
+    One place to track recalls for your products, explore public recall notices,
+    and follow
+  </text>
+  <text
+    x="172"
+    y="442.1"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="19"
+    font-weight="400"
+    text-anchor="start"
+  >
+    the recalls that matter to you.
+  </text>
+  <rect
+    x="172"
+    y="496"
+    width="310"
+    height="196"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="447"
+    y="539.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="28"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    ↗
+  </text>
+  <text
+    x="194"
+    y="589.6"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="24"
+    font-weight="400"
+    text-anchor="start"
+  >
+    My Products
+  </text>
+  <text
+    x="194"
+    y="624.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Keep a list of what you own and look
+  </text>
+  <text
+    x="194"
+    y="648.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    for possible recalls.
+  </text>
+  <rect
+    x="500"
+    y="496"
+    width="310"
+    height="196"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="775"
+    y="539.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="28"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    ↗
+  </text>
+  <text
+    x="522"
+    y="589.6"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="24"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Recall Explorer
+  </text>
+  <text
+    x="522"
+    y="624.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Browse official notices from the
+  </text>
+  <text
+    x="522"
+    y="648.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    United States and Canada.
+  </text>
+  <rect
+    x="828"
+    y="496"
+    width="310"
+    height="196"
+    rx="0"
+    fill="#f3f3f3"
+    stroke="#a7a7a7"
+  />
+  <text
+    x="1103"
+    y="539.2"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="28"
+    font-weight="400"
+    text-anchor="middle"
+  >
+    ↗
+  </text>
+  <text
+    x="850"
+    y="589.6"
+    fill="#252525"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="24"
+    font-weight="400"
+    text-anchor="start"
+  >
+    My Watchlist
+  </text>
+  <text
+    x="850"
+    y="624.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    Follow up on the recalls that matter
+  </text>
+  <text
+    x="850"
+    y="648.4"
+    fill="#666666"
+    font-family="Arial, Segoe UI Symbol, sans-serif"
+    font-size="16"
+    font-weight="400"
+    text-anchor="start"
+  >
+    to you.
+  </text>
+</svg>

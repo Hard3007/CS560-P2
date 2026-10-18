@@ -160,6 +160,22 @@ The application is deployed on Railway.
 
 Database credentials are stored securely in environment variables and are not committed to GitHub.
 
+## AI Assistance
+
+We used OpenAI Codex to help prepare recall data from CPSC and Health Canada, including mapping different source fields into a consistent structure for MongoDB.
+
+Codex helped review application logic and debug pagination issues, such as page counts, navigation between pages, and returning to a valid page after deleting an entry.
+
+We also used Codex to improve the interface for mobile devices by adjusting spacing, tables, filters, and buttons, and fixing horizontal overflow.
+
+For Railway deployment, Codex helped troubleshoot environment variables, MongoDB connections, and differences between local and production configuration.
+
+Codex helped identify and fix ESLint and Prettier issues to keep code quality and formatting consistent across the project.
+
+Sheng used Codex to implement the image viewer, including click-to-enlarge, mouse-wheel zoom, drag controls, and reset functionality.
+
+We also used AI to help answer specific technical questions, including the performance trade-offs between prefetching pages and loading them on demand, and estimates of how many concurrent users our server specifications could support.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).

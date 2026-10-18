@@ -146,208 +146,108 @@ The names and core needs come from the proposal. The scenarios and design implic
 
 ## 4. Design Mockups
 
-### Reading these mockups
-
-The six wireframes below summarize the page structure and main controls using monospaced text. Spacing, sample content, and abbreviated text are schematic. The Home and inner pages share the logo and footer; only the inner pages show the three-tab navigation. The Watchlist mockup includes both empty and populated states.
+These wireframes show the page layout and key controls. Gray boxes indicate grouped content or image placeholders. Sample products, notes, and counts illustrate the interface; they are not screenshots of personal records. Each image has an editable SVG version.
 
 ### 4.1 Home
 
-```text
-┌──────────────────────────────────────────────────────────────────┐
-│ ◇ RecallGuard                                                    │
-│                                                                  │
-│ Know what you bring home.                                        │
-│ Track products, explore public notices, and follow recalls.       │
-│                                                                  │
-│ ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐   │
-│ │ My Products      │ │ Recall Explorer  │ │ My Watchlist     │   │
-│ │ Track possessions│ │ Browse notices   │ │ Follow recalls   │   │
-│ │ Open →           │ │ Open →           │ │ Open →           │   │
-│ └──────────────────┘ └──────────────────┘ └──────────────────┘   │
-└──────────────────────────────────────────────────────────────────┘
-```
+![Home wireframe showing the headline and three feature tiles](mockups/01-home.png)
 
-**Route:** `/`  
-**Purpose:** Introduce the application with “Know what you bring home.” and direct users to My Products, Recall Explorer, or My Watchlist. The actual home page uses feature links rather than the inner pages' navigation bar.  
+[Editable SVG](mockups/01-home.svg)
+
+**Route:** `/`
+
+The home page introduces RecallGuard with the headline “Know what you bring home.” Three large tiles lead to My Products, Recall Explorer, and My Watchlist. The logo and footer match the inner pages, while the tab navigation stays off the home page.
+
 **Stories supported:** Entry point for N1–N3 and S1–S3.
 
-### 4.2 My Products — empty inventory
+### 4.2 My Products
 
-```text
-┌──────────────────────────────────────────────────────────────────┐
-│ ◇ RecallGuard                                                    │
-│ My Products     Recall Explorer     My Watchlist                  │
-├──────────────────────────────────────────────────────────────────┤
-│ Keep your products here and check for possible recalls.           │
-│ [ Add product ]                                                  │
-│                                                                  │
-│ Search [________________________] [ Search ]                      │
-│ Brand [ All brands ▾ ]  Category [ All categories ▾ ] [ Clear ]    │
-│                                                                  │
-│ 0 products                                  Newest added first   │
-│ ┌──────────────────────────────────────────────────────────────┐ │
-│ │ Your product list is empty                                   │ │
-│ │ Choose Add product to keep track of something you own.       │ │
-│ └──────────────────────────────────────────────────────────────┘ │
-└──────────────────────────────────────────────────────────────────┘
-```
+![My Products wireframe showing search, filters, a populated product table, row actions, and pagination](mockups/02-products.png)
 
-**Route:** `/products.html`  
-**Hierarchy:** Shared navigation → introductory instruction and Add product → search/brand/category controls → product count and newest-added ordering → inventory/empty state.  
-**Empty state:** “Your product list is empty,” followed by guidance to choose Add product.  
-**Stories supported:** N1 and N2; Check recalls opens the matching workflow for N3.
+[Editable SVG](mockups/02-products.svg)
 
-### 4.3 Add Product — dialog
+**Route:** `/products.html`
 
-```text
-       ┌───────────────────────────────────────────────────┐
-       │ Add product                                  [ × ] │
-       │                                                   │
-       │ Use the name on the product or packaging.          │
-       │ Brand and model help narrow recall searches.      │
-       │                                                   │
-       │ Country  (●) All  ( ) United States  ( ) Canada     │
-       │ Product name [_________________________________]  │
-       │ Brand        [_________________________________]  │
-       │ Model        [_________________________________]  │
-       │ Category     [_______________________________ ▾]  │
-       │                                                   │
-       │                       [ Cancel ] [ Save product ] │
-       └───────────────────────────────────────────────────┘
-```
+Search, Brand, and Category appear above the product table. Each row shows the product, country, brand, and category, with Check recalls, Edit, and Delete actions. The list uses 20 products per page. When it is empty, a message directs the user to Add product.
 
-**Entry:** Add product on My Products.  
-**Hierarchy:** Dialog title and close control → identification guidance → country → product name, brand, model, category → Cancel and Save product.  
-**Design rationale:** Use the name on the product or packaging. Optional brand and model fields help rank possible recall matches. The same dialog is reused for editing, with existing values filled in. Country can be left as All or restricted to the United States or Canada.  
+**Stories supported:** N1 and N2; Check recalls starts N3.
+
+### 4.3 Add / Edit Product
+
+![Product form wireframe with country, required product name, optional brand, model and category, and save and cancel actions](mockups/03-product-form.png)
+
+[Editable SVG](mockups/03-product-form.svg)
+
+**Entry:** Add product or Edit on My Products.
+
+The form opens in a dialog. Product name is required; country, brand, model, and category are optional. Country can be All, United States, or Canada. Editing uses the same form with the existing values filled in. Cancel closes the dialog without saving.
+
 **Story supported:** N1.
 
-### 4.4 Recall Explorer — advanced filters expanded
+### 4.4 Possible Recalls
 
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│ ◇ RecallGuard                                                          │
-│ My Products     Recall Explorer     My Watchlist                        │
-├────────────────────────────────────────────────────────────────────────┤
-│ Country  (●) All  ( ) United States  ( ) Canada                          │
-│ Search [___________________]  Risk [ All risks ▾ ]  [ Search ]          │
-│ [ More filters ▴ ]  [ Clear filters ]                                  │
-│ ┌────────────────────────────────────────────────────────────────────┐ │
-│ │ Category [___________ ▾]  Brand or manufacturer [________________] │ │
-│ │ Updated from [mm/dd/yyyy]  Updated to [mm/dd/yyyy]                  │ │
-│ └────────────────────────────────────────────────────────────────────┘ │
-│ Recall results                                         [ Newest ↕ ]   │
-│ ────────────────────────────────────────────────────────────────────── │
-│ Recall                 Country  Category          Risk   Updated       │
-│ Van Rysel GRVL AF       US       Bicycles or        Crash  Oct 8, 2026   │
-│ Bicycles →                      Accessories                            │
-│ [ Save to Watchlist ]                                                  │
-│ ────────────────────────────────────────────────────────────────────── │
-│ 1–20 of results       [ ← Previous ]  Page …  [ Next → ]                 │
-└────────────────────────────────────────────────────────────────────────┘
-```
+![Possible recalls dialog wireframe showing a search field, linked recall results, country and source metadata, and pagination](mockups/04-possible-recalls.png)
 
-**Route:** `/recalls.html`  
-**Hierarchy:** Shared navigation → country/search/risk → More filters and Clear filters → advanced category, brand/manufacturer, and updated-date range → results count and sort → recall table → pagination.  
-**Result fields:** Recall, Country, Category, Risk, Updated, and Details. Recall titles open details, and rows expose Save to Watchlist. The sample bicycle row reflects an observed record; other content is abbreviated.  
+[Editable SVG](mockups/04-possible-recalls.svg)
+
+**Entry:** Check recalls on a product row.
+
+The dialog lists possible matches for the selected product, with a search field to narrow the results and 10 matches per page. Each result opens Recall Details. Product-name matches remain available when the brand is missing or inaccurate; matches with additional brand/model terms rank first. Users still need to confirm identifying details in the official notice.
+
+**Story supported:** N3.
+
+### 4.5 Recall Explorer
+
+![Recall Explorer wireframe showing country controls, risk and keyword search, expanded advanced filters, results, sorting, save actions, and pagination](mockups/05-explorer.png)
+
+[Editable SVG](mockups/05-explorer.svg)
+
+**Route:** `/recalls.html`
+
+Country controls and the combined risk/search field stay visible. More filters reveals category, brand/manufacturer, and updated-date ranges; the wireframe shows this expanded state. The results table shows Recall, Country, Category, Risk, and Updated, with links to details and Save to Watchlist actions. Newest/Oldest sorting appears beside the total count.
+
 **Stories supported:** S1 and S2.
 
-### 4.5 Recall Details
+### 4.6 Recall Details
 
-```text
-┌──────────────────────────────────────────────────────────────────┐
-│ ◇ RecallGuard                                                    │
-│ My Products     Recall Explorer     My Watchlist                  │
-├──────────────────────────────────────────────────────────────────┤
-│ ← Back to recalls                                                │
-│ United States · U.S. CPSC                                        │
-│ Recall title                                                     │
-│ [ Save to Watchlist ]                                            │
-│ Recall date · Last updated      Read the official notice ↗        │
-│                                                                  │
-│ ┌────────────────────────────────┐ ┌───────────────────────────┐ │
-│ │ Hazard                         │ │ Product information       │ │
-│ │ Source hazard text             │ │ Product · Category        │ │
-│ │                                │ │ Manufacturer              │ │
-│ │ What to do                     │ │ Recall number · Source ID │ │
-│ │ Official action instructions   │ └───────────────────────────┘ │
-│ │                                │                               │
-│ │ Description                    │                               │
-│ │ Consumer contact               │                               │
-│ └────────────────────────────────┘                               │
-│ Product images                                                   │
-│ [ Image + caption ]  [ Image + caption ]  Click to enlarge         │
-└──────────────────────────────────────────────────────────────────┘
-```
+![Recall Details wireframe showing source and dates, hazard and remedy content, product facts, official notice and save links, and image placeholders](mockups/06-recall-details.png)
 
-**Route pattern:** `/recall.html?source=cpsc&id=11020&return=`  
-**Hierarchy:** Back to recalls → source/country and notice title → Save to Watchlist, dates, and official-source link → Hazard, What to do, Description, Consumer contact → Product information → Product images.  
-**Design rationale:** Place the hazard and response instructions near the top of the reading flow, with identifying facts and images available for comparison. Source records can omit fields. The page indicates missing information and links to the official notice. Clicking an image opens a larger viewer with wheel zoom, drag, zoom buttons, Reset, and Escape to close.  
-**Stories supported:** S1 and S2; official notice review also supports the intent of N3.
+[Editable SVG](mockups/06-recall-details.svg)
 
-### 4.6 My Watchlist — empty and saved states
+**Route pattern:** `/recall.html?source=cpsc&id=11020&return=`
 
-```text
-┌──────────────────────────────────────────────────────────────────┐
-│ ◇ RecallGuard                                                    │
-│ My Products     Recall Explorer     My Watchlist                  │
-├──────────────────────────────────────────────────────────────────┤
-│ My Watchlist                                                     │
-│ Save recalls in Recall Explorer →, then track next steps here.    │
-│ Open the notice to verify the product and official instructions.  │
-│                                                                  │
-│ ┌──────────────────────────────────────────────────────────────┐ │
-│ │ Your list belongs to this browser. Clearing browser storage  │ │
-│ │ loses access; records expire after one year of inactivity.   │ │
-│ └──────────────────────────────────────────────────────────────┘ │
-│ Your watchlist is empty. Save a recall in Recall Explorer.        │
-│ [ Refresh list ]                                                 │
-└──────────────────────────────────────────────────────────────────┘
+The page places hazard and remedy information before the longer description and consumer contact details. Product facts appear alongside the notice, and an official-source link lets users verify the record. Clicking a product image opens the larger viewer with wheel zoom, drag, zoom buttons, Reset, and Escape to close. Missing source fields are indicated rather than filled with assumed values.
 
-Saved-item state:
-┌──────────────────────────────────────────────────────────────────┐
-│ Saved recall → open notice                                       │
-│ Status: Reviewing / Contacted Manufacturer / Resolved             │
-│ Notes [______________________________________________________]   │
-│ [ Save changes ]  [ Remove ]                                     │
-│ ...                                                              │
-│ 21–40 of 41      [ Previous ]  Page 2 of 3  [ Next ]               │
-└──────────────────────────────────────────────────────────────────┘
-```
+**Stories supported:** S1 and S2; reviewing identifying information also supports N3.
 
-**Route:** `/watchlist.html`  
-**Hierarchy:** Shared navigation → My Watchlist heading → instructions and Recall Explorer link → browser-access/expiry notice → count or empty-state message → saved recall forms → pagination. Refresh list reloads the current page.  
-**Behavior:** Saving updates the entry in MongoDB. Remove opens a confirmation dialog. Pagination shows the entry range, current page, and Previous/Next controls when there is more than one page.  
+### 4.7 My Watchlist
+
+![My Watchlist wireframe showing browser ownership information, a saved recall with status and notes fields, save and remove actions, and pagination](mockups/07-watchlist.png)
+
+[Editable SVG](mockups/07-watchlist.svg)
+
+**Route:** `/watchlist.html`
+
+The browser-access notice explains where the list belongs and when records expire. Each saved recall links to its details and provides Status, Notes, Save changes, and Remove. The list shows 20 entries per page, newest saved first. Remove requires confirmation, and changing pages or refreshing the list prompts before discarding unsaved edits. With no entries, the page links users to Recall Explorer.
+
 **Stories supported:** S2 and S3.
 
-### Navigation and task flows
+### Navigation and Task Flows
 
-```text
-Home
-├── My Products
-│   ├── Add / Edit / Delete product
-│   ├── Search / Brand / Category / Pagination
-│   └── Check recalls → Search possible matches → Recall Details
-├── Recall Explorer
-│   ├── Search / Filters / Sort / Pagination
-│   └── Recall Details
-│       ├── Official notice / Image viewer
-│       └── Save to Watchlist
-└── My Watchlist
-    ├── Empty state / Refresh list
-    ├── Notes / Status / Save changes / Remove
-    └── Pagination → Recall Details → Return to the same page
-```
+![Task flow diagram connecting Home to My Products, Recall Explorer and My Watchlist, and showing possible matches, recall details, and saving](mockups/08-task-flows.png)
 
-### Interaction and usability principles
+[Editable SVG](mockups/08-task-flows.svg)
 
-- **Keep tasks distinct:** My Products organizes possessions; Recall Explorer searches shared reference records; My Watchlist tracks follow-up on selected notices.
-- **Support scanning:** Table columns expose country, category, hazard labels, and update dates before the user opens a full notice.
-- **Reduce initial form complexity:** More filters reveals category, manufacturer, and date controls when needed.
-- **Guide empty states:** Both reviewed personal-data pages explain the next step instead of showing an unexplained blank list.
-- **Keep provenance visible:** Recall Details links back to the official notice and identifies the source.
-- **Explain access limitations:** The watchlist explicitly describes browser access and expiry.
+Users can maintain products or saved recalls independently. Both workflows read the same government recall records. Opening a notice from My Watchlist and returning restores the page number.
 
-Forms and dialogs use standard HTML controls. The Watchlist layout fits a 320-pixel viewport, and the API validates submitted fields and returns readable errors.
+### Interaction and Usability Principles
+
+- **Keep tasks distinct:** My Products organizes possessions; Recall Explorer searches shared records; My Watchlist tracks follow-up.
+- **Support scanning:** Tables expose the key fields before users open a full record.
+- **Keep optional filters out of the way:** More filters reveals advanced search controls when needed.
+- **Guide empty states:** Personal lists explain how to add their first entry.
+- **Keep provenance visible:** Recall Details identifies the government source and links to its official notice.
+- **Explain access limitations:** Personal lists use the browser's random identity and expire after inactivity.
 
 ## 5. Project Materials
 
@@ -361,4 +261,4 @@ This document was updated on October 18, 2026 to reflect the current source code
 
 ## Document Format
 
-All six mockups are embedded directly in this Markdown file as text wireframes. No image files, external fonts, or `mockups/` directory are required to render this document. View it in GitHub or a Markdown preview with a monospaced font; narrow screens may require horizontal scrolling within the diagrams.
+Wireframes are stored in `docs/mockups/`. PNG images are embedded above for viewing on GitHub; the matching SVG files can be opened in a browser or vector editor. Keep both versions together when sharing this document.
