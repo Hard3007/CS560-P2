@@ -164,17 +164,47 @@ Database credentials are stored securely in environment variables and are not co
 
 We used OpenAI Codex to help prepare recall data from CPSC and Health Canada, including mapping different source fields into a consistent structure for MongoDB.
 
+**Prompt:**
+
+> Apply your suggested improvements to the JSON schema I provided, and make sure the U.S. and Canadian recall records use the same data structure.
+
 Codex helped review application logic and debug pagination issues, such as page counts, navigation between pages, and returning to a valid page after deleting an entry.
+
+**Prompt:**
+
+> Fix the pagination issue in the function that handles page changes.
 
 We also used Codex to improve the interface for mobile devices by adjusting spacing, tables, filters, and buttons, and fixing horizontal overflow.
 
+**Prompt:**
+
+> Keep the Explorer table focused on basic information and optimize the list for mobile devices.
+
 For Railway deployment, Codex helped troubleshoot environment variables, MongoDB connections, and differences between local and production configuration.
+
+**Prompt:**
+
+> Why might a MongoDB connection work locally but fail on Railway?
+
+> How should the Express application handle startup when MongoDB is unavailable? What can health checks and deployment logs tell us about database connectivity and application readiness?
 
 Codex helped identify and fix ESLint and Prettier issues to keep code quality and formatting consistent across the project.
 
+**Prompt:**
+
+> Fix the Prettier formatting issues, show me which code sections failed the check, and explain why they did not pass.
+
 Sheng used Codex to implement the image viewer, including click-to-enlarge, mouse-wheel zoom, drag controls, and reset functionality.
 
+**Prompt:**
+
+> Give me a function skeleton for enlarging images on the detail page when clicked and supporting mouse-wheel zoom. Leave the implementation for me to complete, then review my version and suggest improvements.
+
 We also used AI to help answer specific technical questions, including the performance trade-offs between prefetching pages and loading them on demand, and estimates of how many concurrent users our server specifications could support.
+
+**Prompt:**
+
+> What are the performance trade-offs between prefetching pages and loading them on demand? Based on our Railway server specifications, approximately how many concurrent users could the application support?
 
 ## License
 
