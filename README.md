@@ -16,16 +16,19 @@ The application integrates public recall data from the U.S. Consumer Product Saf
 ## Features
 
 ### My Products
+
 - Add, edit, and delete personal products.
 - Search and filter products by brand and category.
 - Find potential recall matches for owned products.
 
 ### Recall Explorer
+
 - Browse and search government recall records.
 - Filter by country, keyword, category, risk, and date.
 - View detailed recall information.
 
 ### My Watchlist
+
 - Save important recalls to a personal watchlist.
 - Update recall status: Reviewing, Contacted Manufacturer, or Resolved.
 - Add and edit personal notes.
@@ -33,26 +36,30 @@ The application integrates public recall data from the U.S. Consumer Product Saf
 
 ## Tech Stack
 
-| Layer | Technologies |
-|-------|-------------|
-| Frontend | HTML5, CSS3, Vanilla JavaScript (ES6) |
-| Backend | Node.js, Express.js |
-| Database | MongoDB (Native Driver) |
-| Deployment | Railway |
-| Data Sources | CPSC, Health Canada |
+| Layer        | Technologies                          |
+| ------------ | ------------------------------------- |
+| Frontend     | HTML5, CSS3, Vanilla JavaScript (ES6) |
+| Backend      | Node.js, Express.js                   |
+| Database     | MongoDB (Native Driver)               |
+| Deployment   | Railway                               |
+| Data Sources | CPSC, Health Canada                   |
 
 ## Screenshots
 
 ### Home Page
+
 ![Home Page](screenshots/home.png)
 
 ### My Products
+
 ![My Products](screenshots/products.png)
 
 ### Recall Explorer
+
 ![Recall Explorer](screenshots/recalls.png)
 
 ### My Watchlist
+
 ![My Watchlist](screenshots/watchlist.png)
 
 ## Installation
@@ -115,12 +122,14 @@ The application supports CRUD operations on products and watchlist records.
 ## Team Responsibilities
 
 **Sheng Qin — My Products & Recall Explorer**
+
 - Product CRUD operations
 - Product search and filtering
 - Recall matching
 - Frontend and backend implementation
 
 **Tian Yuan — Recall Explorer & Watchlist**
+
 - Recall browsing and advanced filtering
 - Watchlist CRUD operations
 - Status and notes management

@@ -1,9 +1,10 @@
 # RecallGuard
+
 ## Design Document — Track Products and Check Safety Recalls
 
 **Project:** CS5610 Project 2  
 **Team:** Sheng Qin and Tian Yuan  
-**Deployed application:** [RecallGuard](https://cs560-p2-production.up.railway.app/)  
+**Deployed application:** [RecallGuard](https://cs560-p2-production.up.railway.app/)
 
 > This document combines the team's original proposal with a read-only review of the deployed interface. The six user stories below reproduce the proposal wording. Interface observations describe visible pages and controls; they do not certify successful database writes or completion of every user story. Mockups are schematic reconstructions, not screenshots or original pre-implementation designs.
 
@@ -19,13 +20,13 @@ A possible match is a starting point for checking a product, rather than proof t
 
 ### Core experience
 
-| Area | Purpose | Evidence and scope |
-| --- | --- | --- |
-| Home | Introduce RecallGuard and offer three entry points. | Observed: My Products, Recall Explorer, and My Watchlist links. |
-| My Products | Maintain an inventory, search/filter it, and check possible recalls. | Observed: empty inventory, Add product dialog, Search, Brand, Category, and Clear controls. Editing, deletion, and matching are proposal requirements; populated product behavior was not tested. |
-| Recall Explorer | Browse and narrow government recall records. | Observed: populated results; country, keyword, risk, category, brand/manufacturer, and updated-date controls; sorting, pagination, recall links, and Save to Watchlist buttons. Filter outcomes were not exhaustively tested. |
-| Recall Details | Read a notice and reach its official source. | Observed on one CPSC notice: source, title, dates, official link, hazard, action instructions, description, consumer contact, product facts, images, and Save to Watchlist. Available fields may vary by source or record. |
-| My Watchlist | Revisit saved recalls and track follow-up. | Observed: empty state, Recall Explorer link, Refresh list, and browser-storage/expiry notice. Saving, status/notes updates, and removal are proposal requirements; populated-item controls and persistence were not tested. |
+| Area            | Purpose                                                              | Evidence and scope                                                                                                                                                                                                            |
+| --------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Home            | Introduce RecallGuard and offer three entry points.                  | Observed: My Products, Recall Explorer, and My Watchlist links.                                                                                                                                                               |
+| My Products     | Maintain an inventory, search/filter it, and check possible recalls. | Observed: empty inventory, Add product dialog, Search, Brand, Category, and Clear controls. Editing, deletion, and matching are proposal requirements; populated product behavior was not tested.                             |
+| Recall Explorer | Browse and narrow government recall records.                         | Observed: populated results; country, keyword, risk, category, brand/manufacturer, and updated-date controls; sorting, pagination, recall links, and Save to Watchlist buttons. Filter outcomes were not exhaustively tested. |
+| Recall Details  | Read a notice and reach its official source.                         | Observed on one CPSC notice: source, title, dates, official link, hazard, action instructions, description, consumer contact, product facts, images, and Save to Watchlist. Available fields may vary by source or record.    |
+| My Watchlist    | Revisit saved recalls and track follow-up.                           | Observed: empty state, Recall Explorer link, Refresh list, and browser-storage/expiry notice. Saving, status/notes updates, and removal are proposal requirements; populated-item controls and persistence were not tested.   |
 
 ### Technology and data design
 
@@ -33,11 +34,11 @@ The HTML5, CSS3, Vanilla JavaScript with ES6 modules, and the Fetch API on the f
 
 The proposed data model separates two writable feature collections from shared recall reference data:
 
-| Data area | Intended role | Responsibility |
-| --- | --- | --- |
-| Products | User-managed owned-product records; supports product CRUD, searching/filtering, and possible recall matching. | Sheng Qin |
-| Recall watchlist | Saved recall references with follow-up status and notes; supports watchlist CRUD. | Tian Yuan |
-| Government recall records | Shared, read-only reference data imported into MongoDB from sources such as U.S. CPSC and Health Canada. | Shared reference dataset |
+| Data area                 | Intended role                                                                                                 | Responsibility           |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| Products                  | User-managed owned-product records; supports product CRUD, searching/filtering, and possible recall matching. | Sheng Qin                |
+| Recall watchlist          | Saved recall references with follow-up status and notes; supports watchlist CRUD.                             | Tian Yuan                |
+| Government recall records | Shared, read-only reference data imported into MongoDB from sources such as U.S. CPSC and Health Canada.      | Shared reference dataset |
 
 These are conceptual data areas from the proposal, not a verified database schema. Each member owns their feature across frontend, Express routes, and database operations. Product and watchlist CRUD are designed to remain independent; neither feature edits the government reference records.
 
@@ -343,9 +344,8 @@ Responsive layouts, keyboard completeness, screen-reader behavior, error handlin
 
 ## 5. Sources and Verification Notes
 
-1. **Original team proposal:** Supplied by the user in the referenced conversation, [解释项目提交要求](chatgpt-conversation://6ad4158f-2d74-83e8-af14-33bb42f0c3fb). Source for the project goal, personas, all six story texts, work division, technology choices, and conceptual data design.
-2. **Deployed interface:** [Home](https://cs560-p2-production.up.railway.app/), [My Products](https://cs560-p2-production.up.railway.app/products.html), [Recall Explorer](https://cs560-p2-production.up.railway.app/recalls.html), and [My Watchlist](https://cs560-p2-production.up.railway.app/watchlist.html), reviewed October 17, 2026.
-3. **Representative detail page:** [Van Rysel GRVL AF Bicycles](https://cs560-p2-production.up.railway.app/recall.html?source=cpsc&id=11020&return=), used to inspect notice structure and source-link placement.
+1. **Deployed interface:** [Home](https://cs560-p2-production.up.railway.app/), [My Products](https://cs560-p2-production.up.railway.app/products.html), [Recall Explorer](https://cs560-p2-production.up.railway.app/recalls.html), and [My Watchlist](https://cs560-p2-production.up.railway.app/watchlist.html), reviewed October 17, 2026.
+2. **Representative detail page:** [Van Rysel GRVL AF Bicycles](https://cs560-p2-production.up.railway.app/recall.html?source=cpsc&id=11020&return=), used to inspect notice structure and source-link placement.
 
 The review opened pages, expanded advanced filters, and opened/closed the Add product dialog. It did not create, update, or delete products or watchlist entries. No claim is made about successful CRUD persistence, matching accuracy, authenticated ownership, database record count, or automatic data refresh. The explorer showed a populated result count, but that display alone is not a database audit.
 
