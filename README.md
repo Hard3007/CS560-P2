@@ -1,3 +1,5 @@
+Really liked how you used real recall data from CPSC and Health Canada, and features like the watchlist status tracking and image zoom make the app feel polished and useful. One small suggestion: since the data is a fixed snapshot, showing a "last updated" date or adding seeding steps in the README would be helpful. Also, the repo name says CS560 instead of CS5610, just a tiny typo!
+
 # RecallGuard
 
 Track products you own and check for safety recalls.
